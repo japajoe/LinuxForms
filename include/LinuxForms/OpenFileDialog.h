@@ -1,0 +1,27 @@
+#ifndef OPENFILEDIALOG_HPP
+#define OPENFILEDIALOG_HPP
+
+#include "Widget.h"
+#include "DialogResult.h"
+#include <vector>
+
+namespace LinuxForms
+{
+    class Form;
+
+    class OpenFileDialog : public Widget
+    {
+    public:
+        OpenFileDialog();
+        OpenFileDialog(Form* window);
+        DialogResult ShowDialog(Form* window = nullptr);
+        std::string GetFileName() const { return filename; }
+        std::vector<std::string> GetFileNames() const { return filenames; }
+    private:
+        GtkWidget* parentWindow;
+        std::string filename;
+        std::vector<std::string> filenames;
+    };
+}
+
+#endif
