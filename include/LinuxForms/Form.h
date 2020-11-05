@@ -14,6 +14,7 @@ namespace LinuxForms
         void Add(Widget* child);
         void SetStyleSheet(const std::string& cssFilePath);
         void SetTitle(const std::string& title);
+        void Show() override;
         EventHandler<DrawEvent> onDraw;
         EventHandler<FormClosingEvent> onClosing;
         EventHandler<KeyDownEvent> onKeyDown;

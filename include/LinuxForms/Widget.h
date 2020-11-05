@@ -22,7 +22,7 @@ namespace LinuxForms
         Rectangle rectangle;
         std::map<std::string,glong> signalID;
         Widget();
-        void Show();
+        virtual void Show();
         void SetSize(const Size& size);
         void CalculatePreferredSize();
         void Destroy();

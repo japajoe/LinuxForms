@@ -13,10 +13,8 @@ LinuxForms::SaveFileDialog::SaveFileDialog(Form* window)
 
 LinuxForms::DialogResult LinuxForms::SaveFileDialog::ShowDialog(Form* window)
 {
-    this->parentWindow = window->widget;
-
     if(parentWindow == nullptr)
-        return LinuxForms::DialogResult::Abort;    
+        parentWindow = window->widget;   
 
 	GtkWidget *dialog;
 	GtkFileChooser *chooser;

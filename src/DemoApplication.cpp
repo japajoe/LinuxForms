@@ -5,21 +5,19 @@ void DemoApplication::Initialize()
     boxMain    = std::make_shared<Box>(GtkOrientation::GTK_ORIENTATION_VERTICAL, 0);
     tabControl = std::make_shared<TabControl<TextView>>();
 
-    auto textview1 = std::make_shared<TextView>();
-    auto textview2 = std::make_shared<TextView>();
-    auto textview3 = std::make_shared<TextView>();    
+    auto textview = std::make_shared<TextView>();
 
     InitializeMenu();
 
     form->Add(boxMain.get());
     boxMain->Add(menubar.get(), false, false, 0);
     boxMain->Add(tabControl.get(), true, true, 0);
-    tabControl->Add(textview1);
-    tabControl->Add(textview2);
-    tabControl->Add(textview3);
+    tabControl->Add(textview);
 
     form->SetTitle("Demo Application");
     CreateCallbacks();
+
+    textview->SetText("Type your text here");
 }
 
 void DemoApplication::InitializeMenu()
@@ -49,6 +47,18 @@ void DemoApplication::OnMenuItemOpenClicked()
     if(dialog.ShowDialog(form.get()) == DialogResult::OK)
     {
         std::string filename = dialog.GetFileName();
+        
+        if(IO::FileExists(filename))
+        {
+            std::string text = IO::ReadAllText(filename);
+            auto textview = std::make_shared<TextView>();
+            tabControl->Add(textview);
+            textview->SetText(text);
+        }
+        else
+        {
+            Console::WriteLine("File does not exist");
+        }
     }
 }
 
@@ -59,6 +69,20 @@ void DemoApplication::OnMenuItemSaveClicked()
     if(dialog.ShowDialog(form.get()) == DialogResult::OK)
     {
         std::string filename = dialog.GetFileName();
+
+        int selectedTab = tabControl->GetSelectedIndex();
+
+        if(selectedTab >= 0)
+        {
+            TabControlItem<TextView>* selected = tabControl->GetItemAtIndex(selectedTab);
+
+            if(selected != nullptr)
+            {
+                std::string text = selected->item->GetText();
+                IO::WriteAllText(text, filename);
+                Console::WriteLine("Saved file as " + filename);
+            }
+        }
     }
 }
 

@@ -13,6 +13,9 @@ LinuxForms::OpenFileDialog::OpenFileDialog(Form* window)
 
 LinuxForms::DialogResult LinuxForms::OpenFileDialog::ShowDialog(Form* window)
 {
+    if(parentWindow == nullptr)
+        parentWindow = window->widget;
+        
 	GtkWidget *dialog;
     GtkFileChooser* chooser;
 	GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;

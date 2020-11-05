@@ -64,6 +64,11 @@ void LinuxForms::Form::SetTitle(const std::string& title)
     gtk_window_set_title(GTK_WINDOW(widget), title.c_str());
 }
 
+void LinuxForms::Form::Show()
+{
+    gtk_widget_show_all(widget);
+}
+
 gboolean LinuxForms::Form::Draw(GtkWidget* widget, cairo_t* cr, gpointer data)
 {
     Form* form = reinterpret_cast<Form*>(data);

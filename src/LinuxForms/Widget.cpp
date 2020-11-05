@@ -7,7 +7,7 @@ LinuxForms::Widget::Widget()
 
 void LinuxForms::Widget::Show()
 {
-    gtk_widget_show_all(widget);
+    gtk_widget_show(widget);
 }
 
 void LinuxForms::Widget::SetSize(const Size& size)

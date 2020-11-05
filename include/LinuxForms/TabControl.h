@@ -49,12 +49,22 @@ namespace LinuxForms
                     tabItem.box->Add(tabItem.scrolledWindow.get(), true, true, 0);
                     tabItem.scrolledWindow->Add(tabItem.widget);
                     gtk_notebook_append_page(GTK_NOTEBOOK(widget), tabItem.box->widget, tabItem.label->widget);
+                    tabItem.item->Show();                
+                    tabItem.box->Show();
+                    tabItem.label->Show();
+                    tabItem.scrolledWindow->Show();                    
                 }
                 else
                 {
                     tabItem.box->Add(tabItem.widget, true, true, 0);
                     gtk_notebook_append_page(GTK_NOTEBOOK(widget), tabItem.box->widget, tabItem.label->widget);
-                }                
+                    tabItem.item->Show();                
+                    tabItem.box->Show();
+                    tabItem.label->Show();                    
+                }
+
+                int currentPage = items.size() - 1;
+                SetSelectedIndex(currentPage);
             }           
         }
 
@@ -73,6 +83,37 @@ namespace LinuxForms
                 return;
             
             items[index].label->SetText(title);
+        }
+
+        int GetSelectedIndex() const
+        {
+            if(items.size() == 0)
+                return -1;
+            
+            int index = gtk_notebook_get_current_page(GTK_NOTEBOOK(widget));
+            return index;
+        }
+
+        void SetSelectedIndex(size_t index)
+        {
+            if(items.size() == 0)
+                return;
+
+            if(index <= 0 || index >= items.size())
+                return;
+
+            gtk_notebook_set_current_page(GTK_NOTEBOOK(widget), index);
+        }
+
+        TabControlItem<T>* GetItemAtIndex(size_t index)
+        {
+            if(items.size() == 0)
+                return nullptr;
+
+            if(index <= 0 || index >= items.size())
+                return nullptr;
+
+            return &items[index];
         }
     private:
         std::vector<TabControlItem<T>> items;
