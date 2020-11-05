@@ -1,7 +1,7 @@
 #ifndef DEMOAPPLICATION_HPP
 #define DEMOAPPLICATION_HPP
 
-#include "Application.h"
+#include "LinuxForms/Application.h"
 
 using namespace LinuxForms;
 

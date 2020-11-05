@@ -1,9 +1,9 @@
 #ifndef KEYCODE_HPP
 #define KEYCODE_HPP
 
-enum KeyCode
+enum class KeyCode
 {
-	 //Backspace = 0,
+	//Backspace = 0,
 	//Delete = 0,
 	//Tab = 0,
 	//Clear = 0,
