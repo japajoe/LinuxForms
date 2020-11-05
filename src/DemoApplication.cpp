@@ -50,10 +50,10 @@ void DemoApplication::OnMenuItemOpenClicked()
         if(IO::FileExists(filename))
         {
             std::string text = IO::ReadAllText(filename);            
-            auto textview = tabControl->AddItem();
+            auto tabPage = tabControl->AddItem();
             
-            if(textview != nullptr)
-                textview->item->SetText(text);
+            if(tabPage != nullptr)
+                tabPage->item->SetText(text);
         }
     }
 }
