@@ -5,4 +5,10 @@ This project is created because I don't like how I have to interact with GTK+ to
 
 I do not intend to make a replacement for gtkmm however, I'm merely trying to make an alternative object oriented library which solepurpose is to aid me in my UI projects. I'm heavily inspired by the design of Windows Forms because I think it has a great API which makes a lot of sense to me and it allows me to easily navigate my way through it and get things done quickly.
 
-That's it for now. 
+# Dependencies
+libgtk-3-dev
+glib 2.0
+libgtksourceview-3.0-dev
+
+# How to use the library?
+See DemoApplication.h and DemoApplication.cpp for reference on how to create widgets and register callbacks
