@@ -25,19 +25,19 @@ void DemoApplication::InitializeMenu()
 {
     MenuInfo menuInfoFile("File");	
 
-    menuInfoFile.AddItem("Open", [this]() { this->OnMenuItemOpenClicked(); });
-    menuInfoFile.AddItem("Save", [this]() { this->OnMenuItemSaveClicked(); });
-    menuInfoFile.AddItem("Exit", [this]() { this->OnMenuItemExitClicked(); });
+    menuInfoFile.AddItem("Open", [this] () { this->OnMenuItemOpenClicked(); });
+    menuInfoFile.AddItem("Save", [this] () { this->OnMenuItemSaveClicked(); });
+    menuInfoFile.AddItem("Exit", [this] () { this->OnMenuItemExitClicked(); });
 
     std::vector<MenuInfo> menuInfo;
     menuInfo.push_back(menuInfoFile);
 
-    menubar = std::make_shared<MenuBar>(menuInfo);    
+    menubar = std::make_shared<MenuBar>(menuInfo);
 }
 
 void DemoApplication::CreateCallbacks()
 {
-    form->onClosing += [this]() { this->OnApplicationClosing(); };
+    form->onClosing += [this] () { this->OnApplicationClosing(); };
     form->onDraw    += [this] (GtkWidget* widget, cairo_t* cr, gpointer data) { this->OnDraw(widget, cr, data); };
 }
 

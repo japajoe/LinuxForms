@@ -1,8 +1,4 @@
 #include "DemoApplication.h"
-#include <iostream>
-#include <memory>
-
-using namespace LinuxForms;
 
 int main(int argc, char** argv)
 {
