@@ -16,16 +16,15 @@ LinuxForms::DialogResult LinuxForms::OpenFileDialog::ShowDialog(Form* window)
     if(parentWindow == nullptr)
         parentWindow = window->widget;
         
-	GtkWidget *dialog;
     GtkFileChooser* chooser;
 	GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
 	gint res;
     LinuxForms::DialogResult result;    
 
-	dialog = gtk_file_chooser_dialog_new ("Open File", GTK_WINDOW(parentWindow), action, "_Cancel", GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
-    chooser = GTK_FILE_CHOOSER (dialog);
+	widget = gtk_file_chooser_dialog_new("Open File", GTK_WINDOW(parentWindow), action, "_Cancel", GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
+    chooser = GTK_FILE_CHOOSER (widget);
 
-	res = gtk_dialog_run (GTK_DIALOG (dialog));
+	res = gtk_dialog_run(GTK_DIALOG(widget));
 	if (res == GTK_RESPONSE_ACCEPT)
 	{
 		char* file = gtk_file_chooser_get_filename (chooser);
@@ -52,6 +51,6 @@ LinuxForms::DialogResult LinuxForms::OpenFileDialog::ShowDialog(Form* window)
         }
     }    
 
-	gtk_widget_destroy (dialog);
+	gtk_widget_destroy(widget);
     return result;  
 }

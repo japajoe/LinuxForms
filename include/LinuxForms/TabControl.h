@@ -115,7 +115,7 @@ namespace LinuxForms
             if(items.size() == 0)
                 return nullptr;
 
-            if(index <= 0 || index >= items.size())
+            if(index < 0 || index >= items.size())
                 return nullptr;
 
             return &items[index];

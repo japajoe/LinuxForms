@@ -14,21 +14,21 @@ LinuxForms::SaveFileDialog::SaveFileDialog(Form* window)
 LinuxForms::DialogResult LinuxForms::SaveFileDialog::ShowDialog(Form* window)
 {
     if(parentWindow == nullptr)
-        parentWindow = window->widget;   
+        parentWindow = window->widget;     
 
-	GtkWidget *dialog;
-	GtkFileChooser *chooser;
+	GtkFileChooser* chooser;
 	GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_SAVE;
 	gint res;
     LinuxForms::DialogResult result;
 
-	dialog = gtk_file_chooser_dialog_new ("Save File", GTK_WINDOW(parentWindow), action, "_Cancel", GTK_RESPONSE_CANCEL, "_Save", GTK_RESPONSE_ACCEPT, NULL);
-	chooser = GTK_FILE_CHOOSER (dialog);
+	widget = gtk_file_chooser_dialog_new("Save File", GTK_WINDOW(parentWindow), action, "_Cancel", GTK_RESPONSE_CANCEL, "_Save", GTK_RESPONSE_ACCEPT, NULL);
+	chooser = GTK_FILE_CHOOSER(widget);
 
 	gtk_file_chooser_set_do_overwrite_confirmation (chooser, TRUE);
 
-	res = gtk_dialog_run (GTK_DIALOG (dialog));
-	if (res == GTK_RESPONSE_ACCEPT)    
+	res = gtk_dialog_run(GTK_DIALOG(widget));
+
+	if (res == GTK_RESPONSE_ACCEPT)
 	{
 		char* file = gtk_file_chooser_get_filename (chooser);
         filename = std::string(file);        
@@ -54,6 +54,6 @@ LinuxForms::DialogResult LinuxForms::SaveFileDialog::ShowDialog(Form* window)
         }
     }    
 
-	gtk_widget_destroy (dialog);
+	gtk_widget_destroy(widget);
     return result;
 }

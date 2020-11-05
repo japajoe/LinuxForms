@@ -19,12 +19,21 @@ public:
     void OnMenuItemExitClicked();
 
     //Widget Callbacks
+    void OnButtonClicked();
+    void OnDraw(GtkWidget* widget, cairo_t* cr, gpointer data);
     void OnApplicationClosing();
 private:
     //Widgets
     std::shared_ptr<Box> boxMain;
+    std::shared_ptr<Panel> panel;
     std::shared_ptr<MenuBar> menubar;
+    std::shared_ptr<SplitContainer> splitContainer;
     std::shared_ptr<TabControl<TextView>> tabControl;
+    std::shared_ptr<Button> button;
+    std::shared_ptr<DrawingArea> drawingArea;
+
+    //Other variables
+    Color color { 1.0f, 1.0f, 0.0f, 1.0f };
 };
 
 #endif
