@@ -12,7 +12,6 @@
 #include "LinuxForms/Image.h"
 #include "LinuxForms/Label.h"
 #include "LinuxForms/ListBox.h"
-#include "LinuxForms/Mathf.h"
 #include "LinuxForms/MenuBar.h"
 #include "LinuxForms/OpenFileDialog.h"
 #include "LinuxForms/Panel.h"
@@ -22,5 +21,9 @@
 #include "LinuxForms/SplitContainer.h"
 #include "LinuxForms/TextEntry.h"
 #include "LinuxForms/TextView.h"
+
+#include "LinuxForms/Utility/IO.h"
+#include "LinuxForms/Utility/Mathf.h"
+#include "LinuxForms/Utility/StringUtility.h"
 
 #endif

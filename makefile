@@ -10,10 +10,12 @@ INC_PATH = include
 
 INC_PATH_UI = include/LinuxForms
 INC_PATH_INPUT = include/LinuxForms/Input
+INC_PATH_UTIL = include/LinuxForms/Utility
 
 SRC_PATH = src
 SRC_PATH_UI = src/LinuxForms
 SRC_PATH_INPUT = src/LinuxForms/Input
+SRC_PATH_UTIL = src/LinuxForms/Utility
 
 LIBRARIES = -lpthread -lstdc++fs
 
@@ -27,7 +29,7 @@ RCOMPILE_FLAGS =
 # Additional debug-specific flags
 DCOMPILE_FLAGS = 
 # Add additional include paths
-INCLUDES = -I $(SRC_PATH) -I $(INC_PATH) -I $(SRC_PATH_UI) -I $(INC_PATH_UI) -I $(SRC_PATH_INPUT) -I $(INC_PATH_INPUT)
+INCLUDES = -I $(SRC_PATH) -I $(INC_PATH) -I $(SRC_PATH_UI) -I $(INC_PATH_UI) -I $(SRC_PATH_INPUT) -I $(INC_PATH_INPUT) -I $(SRC_PATH_UTIL) -I $(INC_PATH_UTIL)
 # General linker settings
 LINK_FLAGS = $(LIBRARIES)
 # Additional release-specific linker settings
