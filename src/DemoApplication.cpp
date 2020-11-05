@@ -18,16 +18,16 @@ void DemoApplication::Initialize()
 
 void DemoApplication::InitializeMenu()
 {
-	MenuInfo menuInfoFile("File");	
-	
-	menuInfoFile.AddItem("Open", [this]() { this->OnMenuItemOpenClicked(); });
-    menuInfoFile.AddItem("Save", [this]() { this->OnMenuItemSaveClicked(); });
-	menuInfoFile.AddItem("Exit", [this]() { this->OnMenuItemExitClicked(); });
+    MenuInfo menuInfoFile("File");	
 
-	std::vector<MenuInfo> menuInfo;
-	menuInfo.push_back(menuInfoFile);
-	
-	menubar = std::make_shared<MenuBar>(menuInfo);    
+    menuInfoFile.AddItem("Open", [this]() { this->OnMenuItemOpenClicked(); });
+    menuInfoFile.AddItem("Save", [this]() { this->OnMenuItemSaveClicked(); });
+    menuInfoFile.AddItem("Exit", [this]() { this->OnMenuItemExitClicked(); });
+
+    std::vector<MenuInfo> menuInfo;
+    menuInfo.push_back(menuInfoFile);
+
+    menubar = std::make_shared<MenuBar>(menuInfo);    
 }
 
 void DemoApplication::CreateCallbacks()
@@ -48,12 +48,12 @@ void DemoApplication::OnMenuItemOpenClicked()
 
 void DemoApplication::OnMenuItemSaveClicked()
 {
-	SaveFileDialog dialog;
+    SaveFileDialog dialog;
 
-	if(dialog.ShowDialog(form.get()) == DialogResult::OK)
-	{
-		std::string filename = dialog.GetFileName();
-	}
+    if(dialog.ShowDialog(form.get()) == DialogResult::OK)
+    {
+        std::string filename = dialog.GetFileName();
+    }
 }
 
 void DemoApplication::OnMenuItemExitClicked()
