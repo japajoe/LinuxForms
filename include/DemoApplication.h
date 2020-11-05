@@ -24,8 +24,10 @@ public:
 private:
     //Widgets
     std::shared_ptr<Box> boxMain;
+    std::shared_ptr<Box> boxHorizontal;
     std::shared_ptr<MenuBar> menubar;
     std::shared_ptr<Image> image;
+    std::shared_ptr<Label> label;
 };
 
 #endif

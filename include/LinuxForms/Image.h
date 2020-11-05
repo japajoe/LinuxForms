@@ -37,9 +37,11 @@ namespace LinuxForms
 	public:
 		Image();
 		Image(const std::string& filepath);
+		Image(int width, int height, bool hasAlpha = true);
 		~Image();
 		void Dispose();
 		bool LoadFromFile(const std::string& filepath);
+		bool LoadFromData(int width, int height, bool hasAlpha = true);
 		void SetPosition(int x, int y);
 		void Render(cairo_t* cr, int x, int y);
 		void SetPixel(int x, int y, const Color& color);
@@ -49,6 +51,7 @@ namespace LinuxForms
 		EventHandler<DrawEvent> onDraw;
 	private:
 		GdkPixbuf* pixels;
+		guint8* buffer;
 		static gboolean Draw(GtkWidget* widget, cairo_t* cr, gpointer data);
 	};
 }

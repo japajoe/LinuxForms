@@ -5,14 +5,24 @@
 LinuxForms::Image::Image()
 {
 	pixels = nullptr;
+	buffer = nullptr;
 	widget = gtk_fixed_new();
 }
 
 LinuxForms::Image::Image(const std::string& filepath)
 {
 	pixels = nullptr;
+	buffer = nullptr;
 	widget = gtk_fixed_new();	
 	LoadFromFile(filepath);
+}
+
+LinuxForms::Image::Image(int width, int height, bool hasAlpha)
+{
+	pixels = nullptr;
+	buffer = nullptr;
+	widget = gtk_fixed_new();	
+	LoadFromData(width, height, hasAlpha);
 }
 
 LinuxForms::Image::~Image()
@@ -26,6 +36,11 @@ void LinuxForms::Image::Dispose()
 	{
 		g_object_unref(pixels);
 		pixels = nullptr;
+	}
+	if(buffer != nullptr)
+	{
+		delete[] buffer;
+		buffer = nullptr;
 	}
 }
 
@@ -50,6 +65,33 @@ bool LinuxForms::Image::LoadFromFile(const std::string& filepath)
 	gtk_widget_set_size_request(widget, rectangle.width, rectangle.height);
 	g_signal_connect(widget, "draw", G_CALLBACK(Draw), this);
 	return true;
+}
+
+bool LinuxForms::Image::LoadFromData(int width, int height, bool hasAlpha)
+{
+	Dispose();
+
+	int bitsPerSample = 24 + hasAlpha ? 8 : 0;
+	int size = width * height * bitsPerSample;
+	int rowstride = width * bitsPerSample;
+	buffer = new guint8[size];
+	bzero(buffer, size);
+
+	pixels = gdk_pixbuf_new_from_data(buffer, GdkColorspace::GDK_COLORSPACE_RGB, hasAlpha, bitsPerSample, width, height, rowstride, NULL, NULL);
+
+	if(!pixels)
+	{
+		Dispose();
+		return false;
+	}
+
+	rectangle.width = gdk_pixbuf_get_width(pixels);
+	rectangle.height = gdk_pixbuf_get_height(pixels);
+	pixels = gdk_pixbuf_scale_simple(pixels, rectangle.width, rectangle.height, GDK_INTERP_BILINEAR);
+	format = ImageFormat::FromPixbuf(pixels);
+	gtk_widget_set_size_request(widget, rectangle.width, rectangle.height);
+	g_signal_connect(widget, "draw", G_CALLBACK(Draw), this);
+	return true;	
 }
 
 void LinuxForms::Image::SetPosition(int x, int y)
