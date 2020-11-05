@@ -25,6 +25,7 @@ namespace LinuxForms
         void Show();
         void SetSize(const Size& size);
         void CalculatePreferredSize();
+        void Destroy();
 
         template <typename T>
         static std::shared_ptr<T> Create()

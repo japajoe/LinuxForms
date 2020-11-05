@@ -18,6 +18,8 @@ void DemoApplication::Initialize()
     tabControl->Add(textview2);
     tabControl->Add(textview3);
 
+    tabControl->Remove(0);
+
     form->SetTitle("Demo Application");
     CreateCallbacks();
 }

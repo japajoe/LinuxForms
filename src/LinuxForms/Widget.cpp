@@ -28,3 +28,15 @@ void LinuxForms::Widget::CalculatePreferredSize()
 	this->rectangle.width = naturalSize.width;
 	this->rectangle.height = naturalSize.height;
 }
+
+void LinuxForms::Widget::Destroy()
+{
+    if(GTK_IS_WIDGET(widget))
+    {
+        if(widget != nullptr)
+        {
+            gtk_widget_destroy(widget);
+            widget = nullptr;
+        }
+    }
+}

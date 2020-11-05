@@ -14,7 +14,7 @@ namespace LinuxForms
         std::shared_ptr<T> item;        
         std::shared_ptr<Label> label;
         std::shared_ptr<Box> box;
-        std::shared_ptr<ScrolledWindow> scrolledWindow;        
+        std::shared_ptr<ScrolledWindow> scrolledWindow;
     };
 
     template<typename T>
@@ -56,6 +56,15 @@ namespace LinuxForms
                     gtk_notebook_append_page(GTK_NOTEBOOK(widget), tabItem.box->widget, tabItem.label->widget);
                 }                
             }           
+        }
+
+        void Remove(size_t index)
+        {
+            if(index >= items.size())
+                return;
+
+            gtk_notebook_remove_page(GTK_NOTEBOOK(widget), index);
+            items.erase(items.begin() + index);
         }
 
         void SetTitle(size_t index, const std::string& title)
