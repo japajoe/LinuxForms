@@ -18,6 +18,7 @@
 #include "LinuxForms/ScrolledWindow.h"
 #include "LinuxForms/SourceView.h"
 #include "LinuxForms/SplitContainer.h"
+#include "LinuxForms/TabControl.h"
 #include "LinuxForms/TextEntry.h"
 #include "LinuxForms/TextView.h"
 
