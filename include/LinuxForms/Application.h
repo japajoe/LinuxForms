@@ -2,8 +2,6 @@
 #define APPLICATION_HPP
 
 #include "LinuxForms.h"
-#include "TimeUtility.h"
-#include "Input/Input.h"
 #include <memory>
 
 namespace LinuxForms

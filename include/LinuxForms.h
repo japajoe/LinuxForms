@@ -4,7 +4,6 @@
 #include "LinuxForms/Application.h"
 #include "LinuxForms/Box.h"
 #include "LinuxForms/Button.h"
-#include "LinuxForms/Console.h"
 #include "LinuxForms/DrawingArea.h"
 #include "LinuxForms/Events.h"
 #include "LinuxForms/EventHandler.h"
@@ -22,8 +21,13 @@
 #include "LinuxForms/TextEntry.h"
 #include "LinuxForms/TextView.h"
 
+#include "LinuxForms/Input/Input.h"
+
+#include "LinuxForms/Utility/Console.h"
 #include "LinuxForms/Utility/IO.h"
 #include "LinuxForms/Utility/Mathf.h"
 #include "LinuxForms/Utility/StringUtility.h"
+#include "LinuxForms/Utility/TimeUtility.h"
+
 
 #endif
