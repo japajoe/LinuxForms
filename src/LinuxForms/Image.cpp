@@ -4,14 +4,12 @@
 
 LinuxForms::Image::Image()
 {
-	//onDraw = nullptr;
 	pixels = nullptr;
 	widget = gtk_fixed_new();
 }
 
 LinuxForms::Image::Image(const std::string& filepath)
 {
-	//onDraw = nullptr;
 	pixels = nullptr;
 	widget = gtk_fixed_new();	
 	LoadFromFile(filepath);
@@ -35,25 +33,23 @@ bool LinuxForms::Image::LoadFromFile(const std::string& filepath)
 {
 	Dispose();
 
-	GError* err = NULL;
-	pixels = gdk_pixbuf_new_from_file(filepath.c_str(), &err);	
+	GError* error = NULL;
+	pixels = gdk_pixbuf_new_from_file(filepath.c_str(), &error);	
 	
-	if(err)
+	if(error)
 	{
-		pixels = nullptr;
-		std::cout << "Couldn't load image " << err->message << "\n";
+		Dispose();
+		std::cout << "Couldn't load image " << error->message << "\n";
 		return false;
 	}
-	else
-	{	
-		rectangle.width = gdk_pixbuf_get_width(pixels);
-		rectangle.height = gdk_pixbuf_get_height(pixels);
-		pixels = gdk_pixbuf_scale_simple(pixels, rectangle.width, rectangle.height, GDK_INTERP_BILINEAR);
-		format = ImageFormat::FromPixbuf(pixels);
-		gtk_widget_set_size_request(widget, rectangle.width, rectangle.height);
-		signalID["draw"] = g_signal_connect(widget, "draw", G_CALLBACK(Draw), this);		
-		return true;
-	}	
+
+	rectangle.width = gdk_pixbuf_get_width(pixels);
+	rectangle.height = gdk_pixbuf_get_height(pixels);
+	pixels = gdk_pixbuf_scale_simple(pixels, rectangle.width, rectangle.height, GDK_INTERP_BILINEAR);
+	format = ImageFormat::FromPixbuf(pixels);
+	gtk_widget_set_size_request(widget, rectangle.width, rectangle.height);
+	g_signal_connect(widget, "draw", G_CALLBACK(Draw), this);
+	return true;
 }
 
 void LinuxForms::Image::SetPosition(int x, int y)
@@ -70,7 +66,7 @@ void LinuxForms::Image::Render(cairo_t* cr, int x, int y)
 	rectangle.x = x;
 	rectangle.y = y;
 	
-	gdk_cairo_set_source_pixbuf(cr, pixels, x, y);	
+	gdk_cairo_set_source_pixbuf(cr, pixels, rectangle.x, rectangle.y);
     cairo_paint(cr);
 }
 
@@ -106,6 +102,14 @@ void LinuxForms::Image::SetPixel(int x, int y, const Color& color)
 	c[3] = static_cast<guchar>(color.a * 255);
 
 	memcpy(p, c, format.channels);
+}
+
+void LinuxForms::Image::Clear(const Color& color)
+{
+	if(pixels == nullptr)
+		return;
+	int c = Color::ToHex(color);
+	gdk_pixbuf_fill(pixels, c);
 }
 
 gboolean LinuxForms::Image::Draw(GtkWidget* widget, cairo_t* cr, gpointer data)

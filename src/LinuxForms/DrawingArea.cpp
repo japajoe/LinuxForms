@@ -2,7 +2,6 @@
 
 LinuxForms::DrawingArea::DrawingArea()
 {
-    //this->onDraw = nullptr;
     widget = gtk_drawing_area_new();
     gtk_widget_set_size_request(widget, 128, 64);
     g_signal_connect(widget, "draw", G_CALLBACK(Draw), this);
@@ -10,7 +9,6 @@ LinuxForms::DrawingArea::DrawingArea()
 
 LinuxForms::DrawingArea::DrawingArea(const int& width, const int& height)
 {
-    //this->onDraw = nullptr;
     widget = gtk_drawing_area_new();
     gtk_widget_set_size_request(widget, width, height);
     g_signal_connect(widget, "draw", G_CALLBACK(Draw), this);

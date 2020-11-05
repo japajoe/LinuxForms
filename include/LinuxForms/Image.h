@@ -43,6 +43,7 @@ namespace LinuxForms
 		void SetPosition(int x, int y);
 		void Render(cairo_t* cr, int x, int y);
 		void SetPixel(int x, int y, const Color& color);
+		void Clear(const Color& color = { 0.0f, 0.0f, 0.0f, 1.0f });
 		GdkPixbuf* GetPixels() const { return pixels; }
 		ImageFormat format;
 		EventHandler<DrawEvent> onDraw;

@@ -1,6 +1,9 @@
 #ifndef COLOR_HPP
 #define COLOR_HPP
 
+#include <string>
+#include <math.h>
+
 namespace LinuxForms
 {
     struct Color
@@ -53,6 +56,21 @@ namespace LinuxForms
             float a = color1.a;
             return { r, g, b, a };
         }
+
+        static unsigned long ToHex(const Color& color)
+        {
+            int r = static_cast<int>(floor(color.r * 255));
+            int g = static_cast<int>(floor(color.g * 255));
+            int b = static_cast<int>(floor(color.b * 255));
+            int a = static_cast<int>(floor(color.a * 255));
+            return ToHex(r, g, b, a);
+        }
+
+        static unsigned long ToHex(int r, int g, int b, int a)
+        {   
+            return ((r & 0xff) << 24) + ((g & 0xff) << 16) + ((b & 0xff) << 8)
+                + (a & 0xff);
+        }        
     };
 }
 
