@@ -16,10 +16,12 @@ namespace LinuxForms
         void Clear();
         void SetReadOnly(bool readOnly);
         EventHandler<SubmitEvent> onSubmit;
+        EventHandler<TextChangedEvent> onTextChanged;
     private:
         GtkEntryBuffer* textbuffer;
         std::string buffer;
         static void Submit(GtkWidget* widget, gpointer data);
+        static void TextChanged(GtkEntryBuffer *textbuffer, gpointer data);
     };
 }
 #endif

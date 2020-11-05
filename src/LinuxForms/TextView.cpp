@@ -57,7 +57,7 @@ void LinuxForms::TextView::SetReadOnly(bool readOnly)
 
 void LinuxForms::TextView::TextChanged(GtkTextBuffer *textbuffer, gpointer data)
 {
-    TextView* textview = reinterpret_cast<TextView*>(data);
-    if(textview->onTextChanged != nullptr)
-        textview->onTextChanged();
+    TextView* textView = reinterpret_cast<TextView*>(data);
+    if(textView->onTextChanged != nullptr)
+        textView->onTextChanged();
 }

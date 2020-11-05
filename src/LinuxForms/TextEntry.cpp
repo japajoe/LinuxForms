@@ -5,6 +5,7 @@ LinuxForms::TextEntry::TextEntry()
     widget = gtk_entry_new();
     textbuffer = gtk_entry_get_buffer(GTK_ENTRY(widget));
     g_signal_connect(widget, "activate", G_CALLBACK(Submit), this);	
+    g_signal_connect(textbuffer, "changed", G_CALLBACK(TextChanged), this);    
 }
 
 LinuxForms::TextEntry::TextEntry(const std::string& text)
@@ -12,7 +13,8 @@ LinuxForms::TextEntry::TextEntry(const std::string& text)
     widget = gtk_entry_new();
     textbuffer = gtk_entry_get_buffer(GTK_ENTRY(widget));	
     SetText(text);
-    g_signal_connect(widget, "activate", G_CALLBACK(Submit), this);	
+    g_signal_connect(widget, "activate", G_CALLBACK(Submit), this);
+    g_signal_connect(textbuffer, "changed", G_CALLBACK(TextChanged), this);
 }
 
 void LinuxForms::TextEntry::SetText(const std::string& text)
@@ -49,4 +51,11 @@ void LinuxForms::TextEntry::Submit(GtkWidget* widget, gpointer data)
 {
     TextEntry* entry = reinterpret_cast<TextEntry*>(data);
     entry->onSubmit();
+}
+
+void LinuxForms::TextEntry::TextChanged(GtkEntryBuffer *textbuffer, gpointer data)
+{
+    TextEntry* textEntry = reinterpret_cast<TextEntry*>(data);
+    if(textEntry->onTextChanged != nullptr)
+        textEntry->onTextChanged();
 }
