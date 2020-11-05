@@ -25,9 +25,10 @@ namespace LinuxForms
         {
             widget = gtk_notebook_new();
         }
-
-        void Add(const std::shared_ptr<T>& item, bool addScrollView = true)
+        
+        TabControlItem<T>* AddItem(bool addScrollView = true)
         {
+            auto item = std::make_shared<T>();
             Widget* itemWidget = dynamic_cast<Widget*>(item.get());
 
             if(itemWidget != nullptr)
@@ -65,10 +66,14 @@ namespace LinuxForms
 
                 int currentPage = items.size() - 1;
                 SetSelectedIndex(currentPage);
-            }           
+
+                return &items[currentPage];
+            }
+
+            return nullptr;          
         }
 
-        void Remove(size_t index)
+        void RemoveItem(size_t index)
         {
             if(index >= items.size())
                 return;

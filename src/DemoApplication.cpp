@@ -5,19 +5,19 @@ void DemoApplication::Initialize()
     boxMain    = std::make_shared<Box>(GtkOrientation::GTK_ORIENTATION_VERTICAL, 0);
     tabControl = std::make_shared<TabControl<TextView>>();
 
-    auto textview = std::make_shared<TextView>();
-
     InitializeMenu();
 
     form->Add(boxMain.get());
     boxMain->Add(menubar.get(), false, false, 0);
     boxMain->Add(tabControl.get(), true, true, 0);
-    tabControl->Add(textview);
+    auto tabControlItem = tabControl->AddItem();    
+
+    if(tabControlItem != nullptr)
+        tabControlItem->item->SetText("Type your text here");
 
     form->SetTitle("Demo Application");
-    CreateCallbacks();
 
-    textview->SetText("Type your text here");
+    InitializeCallbacks();
 }
 
 void DemoApplication::InitializeMenu()
@@ -34,10 +34,9 @@ void DemoApplication::InitializeMenu()
     menubar = std::make_shared<MenuBar>(menuInfo);
 }
 
-void DemoApplication::CreateCallbacks()
+void DemoApplication::InitializeCallbacks()
 {
     form->onClosing += [this] () { this->OnApplicationClosing(); };
-    form->onDraw    += [this] (GtkWidget* widget, cairo_t* cr, gpointer data) { this->OnDraw(widget, cr, data); };
 }
 
 void DemoApplication::OnMenuItemOpenClicked()
@@ -50,14 +49,11 @@ void DemoApplication::OnMenuItemOpenClicked()
         
         if(IO::FileExists(filename))
         {
-            std::string text = IO::ReadAllText(filename);
-            auto textview = std::make_shared<TextView>();
-            tabControl->Add(textview);
-            textview->SetText(text);
-        }
-        else
-        {
-            Console::WriteLine("File does not exist");
+            std::string text = IO::ReadAllText(filename);            
+            auto textview = tabControl->AddItem();
+            
+            if(textview != nullptr)
+                textview->item->SetText(text);
         }
     }
 }
@@ -74,7 +70,7 @@ void DemoApplication::OnMenuItemSaveClicked()
 
         if(selectedTab >= 0)
         {
-            TabControlItem<TextView>* selected = tabControl->GetItemAtIndex(selectedTab);
+            auto selected = tabControl->GetItemAtIndex(selectedTab);
 
             if(selected != nullptr)
             {
@@ -89,12 +85,6 @@ void DemoApplication::OnMenuItemSaveClicked()
 void DemoApplication::OnMenuItemExitClicked()
 {
     Quit();
-}
-
-void DemoApplication::OnDraw(GtkWidget* widget, cairo_t* cr, gpointer data)
-{
-    TimeUtility::Update();
-    gtk_widget_queue_draw(widget);
 }
 
 void DemoApplication::OnApplicationClosing()

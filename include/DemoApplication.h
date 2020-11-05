@@ -11,7 +11,7 @@ public:
     //Initialize widgets and register callbacks
     void Initialize() override;
     void InitializeMenu();
-    void CreateCallbacks();
+    void InitializeCallbacks();
 
     //Menu Item Callbacks
     void OnMenuItemOpenClicked();
@@ -19,7 +19,6 @@ public:
     void OnMenuItemExitClicked();
 
     //Widget Callbacks
-    void OnDraw(GtkWidget* widget, cairo_t* cr, gpointer data);
     void OnApplicationClosing();
 private:
     //Widgets
