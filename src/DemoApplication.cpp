@@ -3,7 +3,7 @@
 void DemoApplication::Initialize()
 {
     boxMain         = std::make_shared<Box>(GtkOrientation::GTK_ORIENTATION_VERTICAL, 0);
-    panel           = std::make_shared<Panel>(200, 100);
+    panel           = std::make_shared<Panel>(200, 80);
     tabControl      = std::make_shared<TabControl<TextView>>();
     splitContainer  = std::make_shared<SplitContainer>(GtkOrientation::GTK_ORIENTATION_VERTICAL);
     button          = std::make_shared<Button>("Change Color");
@@ -17,7 +17,7 @@ void DemoApplication::Initialize()
     splitContainer->Add(tabControl.get(), 0, true, false);
     splitContainer->Add(panel.get(), 1, true, false);
     panel->Add(button.get(), 5, 0);
-    panel->Add(drawingArea.get(), 120, 0);
+    panel->Add(drawingArea.get(), 5, 30);
     
     auto tabControlItem = tabControl->AddItem();
 

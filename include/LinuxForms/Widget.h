@@ -36,7 +36,7 @@ namespace LinuxForms
             if(widget != nullptr)
                 return ptr;
             return nullptr;
-        }            
+        }
     };
 }
 

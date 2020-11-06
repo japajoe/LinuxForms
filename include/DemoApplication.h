@@ -33,7 +33,7 @@ private:
     std::shared_ptr<DrawingArea> drawingArea;
 
     //Other variables
-    Color color { 1.0f, 1.0f, 0.0f, 1.0f };
+    Color color { 1.0f, 0.5f, 1.0f, 1.0f };
 };
 
 #endif
