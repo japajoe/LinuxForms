@@ -1,12 +1,12 @@
 #include "ColorPickerDialog.h"
 #include "Console.h"
 
-LinuxForms::ColorPickerDialog::ColorPickerDialog(Form* form)
+LinuxForms::ColorPickerDialog::ColorPickerDialog(Window* window)
 {
-    this->parentWindow = form->widget;
+    this->parentWindow = window->widget;
 }
 
-LinuxForms::DialogResult LinuxForms::ColorPickerDialog::ShowDialog(Form* window)
+LinuxForms::DialogResult LinuxForms::ColorPickerDialog::ShowDialog(Window* window)
 {
     if(parentWindow == nullptr)
         parentWindow = window->widget;

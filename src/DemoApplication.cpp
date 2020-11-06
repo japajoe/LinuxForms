@@ -11,7 +11,7 @@ void DemoApplication::Initialize()
 
     InitializeMenu();
 
-    form->Add(boxMain.get());
+    window->Add(boxMain.get());
     boxMain->Add(menubar.get(), false, false, 5);
     boxMain->Add(splitContainer.get(), true, true, 5);
     splitContainer->Add(tabControl.get(), 0, true, false);
@@ -24,9 +24,9 @@ void DemoApplication::Initialize()
     if(tabControlItem != nullptr)
         tabControlItem->item->SetText("Type your text here");
 
-    form->SetTitle("Demo Application");
+    window->SetTitle("Demo Application");
 
-    int height = form->rectangle.height - 120;
+    int height = window->rectangle.height - 120;
 
     splitContainer->SetSeparatorPosition(height);
 
@@ -49,7 +49,7 @@ void DemoApplication::InitializeMenu()
 
 void DemoApplication::InitializeCallbacks()
 {
-    form->onClosing     += [this] () { this->OnApplicationClosing(); };
+    window->onClosing     += [this] () { this->OnApplicationClosing(); };
     button->onClicked   += [this] () { this->OnButtonClicked(); };
     drawingArea->onDraw += [this] (GtkWidget* widget, cairo_t* cr, gpointer data) { this->OnDraw(widget, cr, data); };
 }
@@ -58,7 +58,7 @@ void DemoApplication::OnMenuItemOpenClicked()
 {
     OpenFileDialog dialog;
 
-    if(dialog.ShowDialog(form.get()) == DialogResult::OK)
+    if(dialog.ShowDialog(window.get()) == DialogResult::OK)
     {
         std::string filename = dialog.GetFileName();
         
@@ -77,7 +77,7 @@ void DemoApplication::OnMenuItemSaveClicked()
 {
     SaveFileDialog dialog;
 
-    if(dialog.ShowDialog(form.get()) == DialogResult::OK)
+    if(dialog.ShowDialog(window.get()) == DialogResult::OK)
     {
         std::string filename = dialog.GetFileName();
 
@@ -104,9 +104,9 @@ void DemoApplication::OnMenuItemExitClicked()
 
 void DemoApplication::OnButtonClicked()
 {
-    ColorPickerDialog dialog(form.get());
+    ColorPickerDialog dialog(window.get());
 
-    if(dialog.ShowDialog(form.get()) == DialogResult::OK)
+    if(dialog.ShowDialog(window.get()) == DialogResult::OK)
     {
         color = dialog.GetColor();
     }

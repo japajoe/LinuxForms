@@ -10,16 +10,16 @@ void LinuxForms::Application::Run(int argc, char** argv)
 {
     gtk_init(&argc, &argv);
     
-    form = Widget::Create<Form>();      
+    window = Widget::Create<Window>();      
     
     Initialize();
 
-    form->onClosing += [this] () { this->OnApplicationQuit(); };
+    window->onClosing += [this] () { this->OnApplicationQuit(); };
 
     TimeUtility::Initialize();
     Input::Initialize();    
     
-    form->Show();
+    window->Show();
 
     gtk_main();
 }
@@ -31,7 +31,7 @@ void LinuxForms::Application::Initialize()
 
 void LinuxForms::Application::Quit()
 {
-    gtk_widget_destroy(form->widget);
+    gtk_widget_destroy(window->widget);
 }
 
 void LinuxForms::Application::OnApplicationQuit()

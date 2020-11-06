@@ -4,6 +4,7 @@
 #include "Widget.h"
 #include "DialogResult.h"
 #include <vector>
+#include "Window.h"
 
 namespace LinuxForms
 {
@@ -13,8 +14,8 @@ namespace LinuxForms
     {
     public:
         SaveFileDialog();
-        SaveFileDialog(Form* window);
-        DialogResult ShowDialog(Form* window = nullptr);
+        SaveFileDialog(Window* window);
+        DialogResult ShowDialog(Window* window = nullptr);
         std::string GetFileName() const { return filename; }
         std::vector<std::string> GetFileNames() const { return filenames; }
     private:

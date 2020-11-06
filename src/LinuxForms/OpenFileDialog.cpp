@@ -1,17 +1,16 @@
 #include "OpenFileDialog.h"
-#include "Form.h"
 
 LinuxForms::OpenFileDialog::OpenFileDialog()
 {
     this->parentWindow = nullptr;
 }
 
-LinuxForms::OpenFileDialog::OpenFileDialog(Form* window)
+LinuxForms::OpenFileDialog::OpenFileDialog(Window* window)
 {
     this->parentWindow = window->widget;
 }
 
-LinuxForms::DialogResult LinuxForms::OpenFileDialog::ShowDialog(Form* window)
+LinuxForms::DialogResult LinuxForms::OpenFileDialog::ShowDialog(Window* window)
 {
     if(parentWindow == nullptr)
         parentWindow = window->widget;

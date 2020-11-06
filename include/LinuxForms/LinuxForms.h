@@ -8,7 +8,6 @@
 #include "DrawingArea.h"
 #include "Events.h"
 #include "EventHandler.h"
-#include "Form.h"
 #include "Image.h"
 #include "Label.h"
 #include "ListBox.h"
@@ -22,6 +21,7 @@
 #include "TabControl.h"
 #include "TextEntry.h"
 #include "TextView.h"
+#include "Window.h"
 
 #include "Input/Input.h"
 

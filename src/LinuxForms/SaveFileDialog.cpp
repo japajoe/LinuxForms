@@ -1,17 +1,16 @@
 #include "SaveFileDialog.h"
-#include "Form.h"
 
 LinuxForms::SaveFileDialog::SaveFileDialog()
 {
     this->parentWindow = nullptr;
 }
 
-LinuxForms::SaveFileDialog::SaveFileDialog(Form* window)
+LinuxForms::SaveFileDialog::SaveFileDialog(Window* window)
 {
     this->parentWindow = window->widget;
 }
 
-LinuxForms::DialogResult LinuxForms::SaveFileDialog::ShowDialog(Form* window)
+LinuxForms::DialogResult LinuxForms::SaveFileDialog::ShowDialog(Window* window)
 {
     if(parentWindow == nullptr)
         parentWindow = window->widget;     

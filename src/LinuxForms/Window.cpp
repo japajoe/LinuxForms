@@ -1,10 +1,10 @@
-#include "Form.h"
+#include "Window.h"
 #include <iostream>
 #include "Input/Input.h"
 
 using namespace LinuxForms;
 
-LinuxForms::Form::Form()
+LinuxForms::Window::Window()
 {
     this->name = name;
     this->size = { 500, 500 };
@@ -13,7 +13,7 @@ LinuxForms::Form::Form()
     
     gtk_widget_add_events(widget, GDK_KEY_PRESS_MASK | GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK);
     
-    g_signal_connect(widget, "destroy", G_CALLBACK(FormClosing), this);
+    g_signal_connect(widget, "destroy", G_CALLBACK(WindowClosing), this);
     g_signal_connect(widget, "draw", G_CALLBACK(Draw), this);
 	g_signal_connect(widget, "key-press-event", G_CALLBACK(KeyDown), this);
 	g_signal_connect(widget, "key-release-event", G_CALLBACK(KeyUp), this);
@@ -23,7 +23,7 @@ LinuxForms::Form::Form()
     SetSize(size);
 }
 
-LinuxForms::Form::Form(const std::string& name, int width, int height)
+LinuxForms::Window::Window(const std::string& name, int width, int height)
 {
     this->name = name;
     this->size = { width, height };
@@ -32,7 +32,7 @@ LinuxForms::Form::Form(const std::string& name, int width, int height)
     
     gtk_widget_add_events(widget, GDK_KEY_PRESS_MASK | GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK);
     
-    g_signal_connect(widget, "destroy", G_CALLBACK(FormClosing), this);
+    g_signal_connect(widget, "destroy", G_CALLBACK(WindowClosing), this);
     g_signal_connect(widget, "draw", G_CALLBACK(Draw), this);
 	g_signal_connect(widget, "key-press-event", G_CALLBACK(KeyDown), this);
 	g_signal_connect(widget, "key-release-event", G_CALLBACK(KeyUp), this);
@@ -42,72 +42,72 @@ LinuxForms::Form::Form(const std::string& name, int width, int height)
     SetSize(size);
 }
 
-void LinuxForms::Form::Add(Widget* child)
+void LinuxForms::Window::Add(Widget* child)
 {
     gtk_container_add(GTK_CONTAINER(widget), child->widget);
 }
 
-void LinuxForms::Form::Add(GtkWidget* child)
+void LinuxForms::Window::Add(GtkWidget* child)
 {
     gtk_container_add(GTK_CONTAINER(widget), child);
 }
 
-void LinuxForms::Form::SetStyleSheet(const std::string& cssFilePath)
+void LinuxForms::Window::SetStyleSheet(const std::string& cssFilePath)
 {
 	GtkCssProvider *provider = gtk_css_provider_new();
 	gtk_css_provider_load_from_path(provider, cssFilePath.c_str(), NULL);    
 	gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
-void LinuxForms::Form::SetTitle(const std::string& title)
+void LinuxForms::Window::SetTitle(const std::string& title)
 {
     gtk_window_set_title(GTK_WINDOW(widget), title.c_str());
 }
 
-void LinuxForms::Form::Show()
+void LinuxForms::Window::Show()
 {
     gtk_widget_show_all(widget);
 }
 
-gboolean LinuxForms::Form::Draw(GtkWidget* widget, cairo_t* cr, gpointer data)
+gboolean LinuxForms::Window::Draw(GtkWidget* widget, cairo_t* cr, gpointer data)
 {
-    Form* form = reinterpret_cast<Form*>(data);
+    Window* window = reinterpret_cast<Window*>(data);
 
-    if(form->onDraw != nullptr)
-        form->onDraw(widget, cr, data);
+    if(window->onDraw != nullptr)
+        window->onDraw(widget, cr, data);
     return false;
 }
 
-void LinuxForms::Form::FormClosing(GtkWidget *widget, gpointer data)
+void LinuxForms::Window::WindowClosing(GtkWidget *widget, gpointer data)
 {    
-    Form* form = reinterpret_cast<Form*>(data);
+    Window* window = reinterpret_cast<Window*>(data);
     
-    if(form->onClosing != nullptr)
-        form->onClosing();
+    if(window->onClosing != nullptr)
+        window->onClosing();
     else
         gtk_main_quit();    
 }
 
-gboolean LinuxForms::Form::KeyDown(GtkWidget *widget, GdkEventKey *event, gpointer data)
+gboolean LinuxForms::Window::KeyDown(GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
     int vkCode = event->keyval;
 	KeyCode key = (KeyCode)vkCode;	
     Input::SetStateUp(key, 0);
     Input::SetStateDown(key, 1);
 
-    Form* form = reinterpret_cast<Form*>(data);
-    form->onKeyDown(key);
+    Window* window = reinterpret_cast<Window*>(data);
+    window->onKeyDown(key);
     return false;
 }
 
-gboolean LinuxForms::Form::KeyUp(GtkWidget *widget, GdkEventKey *event, gpointer data)
+gboolean LinuxForms::Window::KeyUp(GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
     int vkCode = event->keyval;
     KeyCode key = (KeyCode)vkCode;
     Input::SetStateDown(key, 0);
     Input::SetStateUp(key, 1);
 
-    Form* form = reinterpret_cast<Form*>(data);
-    form->onKeyUp(key);
+    Window* window = reinterpret_cast<Window*>(data);
+    window->onKeyUp(key);
     return false;
 }

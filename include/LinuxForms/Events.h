@@ -8,7 +8,7 @@
 namespace LinuxForms
 {
     //typedef std::function<void(GtkWidget *widget, gpointer data)> FormClosingEvent;
-    typedef std::function<void()> FormClosingEvent;
+    typedef std::function<void()> WindowClosingEvent;
     typedef std::function<void()> ButtonClickedEvent;
     typedef std::function<void()> TextChangedEvent;
     typedef std::function<void()> MenuItemClickedEvent;

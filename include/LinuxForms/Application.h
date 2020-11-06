@@ -13,7 +13,7 @@ namespace LinuxForms
         virtual void Initialize();
         void Run(int argc, char** argv);
         void Quit();
-        std::shared_ptr<Form> form;
+        std::shared_ptr<Window> window;
     private:
         void OnApplicationQuit();
     };
