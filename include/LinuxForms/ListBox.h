@@ -14,40 +14,19 @@ namespace LinuxForms
     class ListBox : public Widget
     {
     public:
+        std::shared_ptr<ScrolledWindow> scrolledWindow;
+        
         ListBox()
         {
             this->numberOfItems = 0;
             widget = gtk_list_box_new();
-
-            buttonToTop = std::make_shared<Button>("↟", 20, 20);
-            buttonUp = std::make_shared<Button>("↑", 20, 20);
-            buttonDown = std::make_shared<Button>("↓", 20, 20);
-            buttonToBottom = std::make_shared<Button>("↡", 20, 20);
-
-            buttonToTop->onClicked += [this]() { this->OnButtonToTopClicked(); };
-            buttonUp->onClicked += [this]() { this->OnButtonUpClicked(); };
-            buttonDown->onClicked += [this]() { this->OnButtonDownClicked(); };
-            buttonToBottom->onClicked += [this]() { this->OnButtonToBottomClicked(); };
-
             scrolledWindow = std::make_shared<ScrolledWindow>();
-            box = std::make_shared<Box>(GtkOrientation::GTK_ORIENTATION_HORIZONTAL, 0);
-            box2 = std::make_shared<Box>(GtkOrientation::GTK_ORIENTATION_VERTICAL, 0);
-            
-            box->Add(scrolledWindow.get(), true, true, 0);
-            box->Add(box2.get(), false, true, 5);
-
-            scrolledWindow->Add(widget);
-
-            box2->Add(buttonToTop.get(), false, false, 0);
-            box2->Add(buttonUp.get(), false, false, 5);
-            box2->Add(buttonDown.get(), false, false, 0);
-            box2->Add(buttonToBottom.get(), false, false, 5);            
+            scrolledWindow->Add(widget);          
         }
 
-        ListBox& operator = (const ListBox& other) = delete;        
-        
-        void AddItem(std::shared_ptr<T> item, const std::string& text, int index = -1)
+        ListItem<T>* AddItem(const std::string& text = "ListItem", int position = -1)
         {
+            auto item = std::make_shared<T>();
             Widget* itemWidget = dynamic_cast<Widget*>(item.get());
 
             if(itemWidget != nullptr)
@@ -55,10 +34,14 @@ namespace LinuxForms
                 ListItem<T> listItem(item, text);
                 items.push_back(listItem);
                 GtkWidget* child = itemWidget->widget;
-                gtk_list_box_insert(GTK_LIST_BOX(widget), child, index);
+                gtk_list_box_insert(GTK_LIST_BOX(widget), child, position);
                 gtk_widget_show_all(child);
                 this->numberOfItems++;
+                int index = items.size() - 1;
+                return &items[index];
             }
+            
+            return nullptr;
         }
 
         void RemoveItem(int index)
@@ -125,65 +108,6 @@ namespace LinuxForms
             RemoveItem(index);
             AddItem(item, item.text, index);
         }
-        
-        void OnButtonToTopClicked()
-        {
-            if(GetItemCount() > 1)
-            {
-                int selectedIndex = GetSelectedIndex();
-
-                if(selectedIndex > 0)
-                {
-
-                }
-            }
-        }
-
-        void OnButtonUpClicked()
-        {
-            if(GetItemCount() > 1)
-            {
-                int selectedIndex = GetSelectedIndex();
-
-                if(selectedIndex > 0)
-                {
-
-                }
-            }            
-        }
-        void OnButtonDownClicked()
-        {
-            if(GetItemCount() > 1)
-            {
-                int selectedIndex = GetSelectedIndex();
-
-                if(selectedIndex > 0)
-                {
-
-                }
-            }
-        }
-
-        void OnButtonToBottomClicked()
-        {
-            if(GetItemCount() > 1)
-            {
-                int selectedIndex = GetSelectedIndex();
-
-                if(selectedIndex > 0)
-                {
-
-                }
-            }           
-        }
-        
-        std::shared_ptr<Button> buttonToTop;        
-        std::shared_ptr<Button> buttonUp;
-        std::shared_ptr<Button> buttonDown;
-        std::shared_ptr<Button> buttonToBottom;
-        std::shared_ptr<Box> box;
-        std::shared_ptr<Box> box2;
-        std::shared_ptr<ScrolledWindow> scrolledWindow;
 
     private:
         int numberOfItems;

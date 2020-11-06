@@ -27,8 +27,10 @@ private:
     std::shared_ptr<Box> boxMain;
     std::shared_ptr<Panel> panel;
     std::shared_ptr<MenuBar> menubar;
-    std::shared_ptr<SplitContainer> splitContainer;
+    std::shared_ptr<SplitContainer> splitContainerV;
+    std::shared_ptr<SplitContainer> splitContainerH;
     std::shared_ptr<TabControl<TextView>> tabControl;
+    std::shared_ptr<ListBox<Label>> listbox;
     std::shared_ptr<Button> button;
     std::shared_ptr<DrawingArea> drawingArea;
 

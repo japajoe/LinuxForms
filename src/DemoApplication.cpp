@@ -3,9 +3,11 @@
 void DemoApplication::Initialize()
 {
     boxMain         = std::make_shared<Box>(GtkOrientation::GTK_ORIENTATION_VERTICAL, 0);
-    panel           = std::make_shared<Panel>(200, 80);
+    panel           = std::make_shared<Panel>(400, 80);
     tabControl      = std::make_shared<TabControl<TextView>>();
-    splitContainer  = std::make_shared<SplitContainer>(GtkOrientation::GTK_ORIENTATION_VERTICAL);
+    splitContainerV = std::make_shared<SplitContainer>(GtkOrientation::GTK_ORIENTATION_VERTICAL);
+    splitContainerH = std::make_shared<SplitContainer>(GtkOrientation::GTK_ORIENTATION_HORIZONTAL);
+    listbox         = std::make_shared<ListBox<Label>>();
     button          = std::make_shared<Button>("Change Color");
     drawingArea     = std::make_shared<DrawingArea>(50, 50);
 
@@ -13,9 +15,11 @@ void DemoApplication::Initialize()
 
     window->Add(boxMain.get());
     boxMain->Add(menubar.get(), false, false, 5);
-    boxMain->Add(splitContainer.get(), true, true, 5);
-    splitContainer->Add(tabControl.get(), 0, true, false);
-    splitContainer->Add(panel.get(), 1, true, false);
+    boxMain->Add(splitContainerV.get(), true, true, 5);    
+    splitContainerV->Add(splitContainerH.get(), 0, true, true);
+    splitContainerV->Add(panel.get(), 1, true, false);    
+    splitContainerH->Add(tabControl.get(), 0, true, true);
+    splitContainerH->Add(listbox->scrolledWindow.get(), 1, true, true);    
     panel->Add(button.get(), 5, 0);
     panel->Add(drawingArea.get(), 5, 30);
     
@@ -24,11 +28,22 @@ void DemoApplication::Initialize()
     if(tabControlItem != nullptr)
         tabControlItem->item->SetText("Type your text here");
 
+    for(size_t i = 0; i < 100; i++)
+    {
+        auto listboxItem = listbox->AddItem();
+        if(listboxItem != nullptr)
+        {
+            listboxItem->item->SetText("Item " + std::to_string(i + 1));
+        }
+    }
+
     window->SetTitle("Demo Application");
 
-    int height = window->rectangle.height - 120;
+    int posY = window->rectangle.height - 120;
+    int posX = window->rectangle.width - 100;
 
-    splitContainer->SetSeparatorPosition(height);
+    splitContainerV->SetSeparatorPosition(posY);
+    splitContainerH->SetSeparatorPosition(posX);
 
     InitializeCallbacks();
 }
@@ -49,7 +64,7 @@ void DemoApplication::InitializeMenu()
 
 void DemoApplication::InitializeCallbacks()
 {
-    window->onClosing     += [this] () { this->OnApplicationClosing(); };
+    window->onClosing   += [this] () { this->OnApplicationClosing(); };
     button->onClicked   += [this] () { this->OnButtonClicked(); };
     drawingArea->onDraw += [this] (GtkWidget* widget, cairo_t* cr, gpointer data) { this->OnDraw(widget, cr, data); };
 }
