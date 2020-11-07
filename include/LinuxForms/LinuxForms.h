@@ -20,7 +20,9 @@
 #include "SourceView.h"
 #include "SplitContainer.h"
 #include "TabControl.h"
+#include "Table.h"
 #include "TextEntry.h"
+#include "Texture.h"
 #include "TextView.h"
 #include "Window.h"
 
