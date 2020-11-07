@@ -21,7 +21,9 @@ namespace LinuxForms
         GtkEntryBuffer* textbuffer;
         std::string buffer;
         static void Submit(GtkWidget* widget, gpointer data);
-        static void TextChanged(GtkEntryBuffer *textbuffer, gpointer data);
+        static void TextDeleted(GtkEntryBuffer* textbuffer, guint position, guint n_chars, gpointer data);
+        static void TextInserted(GtkEntryBuffer* textbuffer, guint position, char* chars, guint n_chars, gpointer data);
+        static void TextChanged(GtkEntryBuffer* textbuffer, gpointer data);
     };
 }
 #endif

@@ -165,6 +165,33 @@ void LinuxForms::Texture::SetScale(float x, float y)
 	gtk_widget_set_size_request(widget, rectangle.width, rectangle.height);
 }
 
+void LinuxForms::Texture::DrawLine(int x1, int y1, int x2, int y2, const Color& color)
+{
+    int dx = abs(x2 - x1), sx = x1 < x2 ? 1 : -1;
+    int dy = abs(y2 - y1), sy = y1 < y2 ? 1 : -1;
+    int err = (dx > dy ? dx : -dy) / 2;
+
+    while (SetPixel(x1, y1, color), x1 != x2 || y1 != y2) 
+	{
+        int e2 = err;
+        if (e2 > -dx) { err -= dy; x1 += sx; }
+        if (e2 <  dy) { err += dx; y1 += sy; }
+    }
+}
+
+// void LinuxForms::Texture::DrawLine(int x0, int y0, int x1, int y1, const Color& color)
+// {
+//     int dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
+//     int dy = abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
+//     int err = (dx > dy ? dx : -dy) / 2;
+
+//     while (SetPixel(x0, y0, color), x0 != x1 || y0 != y1) {
+//         int e2 = err;
+//         if (e2 > -dx) { err -= dy; x0 += sx; }
+//         if (e2 <  dy) { err += dx; y0 += sy; }
+//     }
+// }
+
 gboolean LinuxForms::Texture::Draw(GtkWidget* widget, cairo_t* cr, gpointer data)
 {
 	Texture* texture = reinterpret_cast<Texture*>(data);

@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <vector>
+#include <sstream>
 
 namespace LinuxForms
 {
@@ -24,7 +25,20 @@ namespace LinuxForms
 		static std::string ToLower(const std::string& text);
 		static std::string ToLowerCase(const std::string& text);
 		static std::string ToUpperCase(const std::string& text);
-		static int ToInt32(const std::string& text);	
+		static int ToInt32(const std::string& text);
+
+		template<typename T>
+		static bool ParseNumber(const std::string& text, T& value)
+		{
+
+			std::stringstream stream(text);
+			stream >> value;
+			if (stream.fail())
+			{
+				return false;
+			}
+			return true;
+		}		
 	};
 }
 #endif

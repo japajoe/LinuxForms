@@ -1,5 +1,4 @@
 #include "StringUtility.h"
-#include <sstream>
 #include <algorithm>
 #include <locale>
 #include <cstdlib> //std::strtol
