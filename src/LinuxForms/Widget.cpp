@@ -29,6 +29,11 @@ void LinuxForms::Widget::CalculatePreferredSize()
 	this->rectangle.height = naturalSize.height;
 }
 
+void LinuxForms::Widget::SetFocus()
+{
+    gtk_widget_grab_focus(widget);
+}
+
 void LinuxForms::Widget::Destroy()
 {
     if(GTK_IS_WIDGET(widget))

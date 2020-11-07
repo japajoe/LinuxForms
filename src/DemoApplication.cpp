@@ -71,21 +71,24 @@ void DemoApplication::InitializeCallbacks()
 
 void DemoApplication::OnMenuItemOpenClicked()
 {
-    OpenFileDialog dialog;
+    auto dialog = std::make_shared<DialogWindow>("Message", "Some text here");
+    dialog->Show();
+    
+    // OpenFileDialog dialog;
 
-    if(dialog.ShowDialog(window.get()) == DialogResult::OK)
-    {
-        std::string filename = dialog.GetFileName();
+    // if(dialog.ShowDialog(window.get()) == DialogResult::OK)
+    // {
+    //     std::string filename = dialog.GetFileName();
         
-        if(IO::FileExists(filename))
-        {
-            std::string text = IO::ReadAllText(filename);            
-            auto tabPage = tabControl->AddItem();
+    //     if(IO::FileExists(filename))
+    //     {
+    //         std::string text = IO::ReadAllText(filename);            
+    //         auto tabPage = tabControl->AddItem();
             
-            if(tabPage != nullptr)
-                tabPage->item->SetText(text);
-        }
-    }
+    //         if(tabPage != nullptr)
+    //             tabPage->item->SetText(text);
+    //     }
+    // }
 }
 
 void DemoApplication::OnMenuItemSaveClicked()

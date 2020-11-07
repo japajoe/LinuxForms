@@ -26,6 +26,7 @@ namespace LinuxForms
         virtual void Show();
         void SetSize(const Size& size);
         void CalculatePreferredSize();
+        void SetFocus();
         void Destroy();
 
         template <typename T>
