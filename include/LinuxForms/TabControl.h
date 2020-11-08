@@ -3,6 +3,7 @@
 
 #include "Widget.h"
 #include <vector>
+#include "Utility/Console.h"
 
 namespace LinuxForms
 {   
@@ -21,7 +22,7 @@ namespace LinuxForms
         {
             this->index = index;
             this->preventClosing = preventClosing;
-            image = gtk_image_new_from_stock("gtk-close", GtkIconSize::GTK_ICON_SIZE_MENU);
+            image = gtk_image_new_from_icon_name("gtk-close", GtkIconSize::GTK_ICON_SIZE_MENU);            
             closeButton = std::make_shared<Button>();
             closeButton->onClicked += [this] (gpointer data) { this->OnButtonClicked(nullptr); };
             gtk_button_set_image(GTK_BUTTON(closeButton->widget), image);
@@ -68,9 +69,12 @@ namespace LinuxForms
     class TabControl : public Widget
     {
     public:
+        EventHandler<SelectedTabChangedEvent> onSelectedIndexChanged;
+    
         TabControl()
         {                
             widget = gtk_notebook_new();
+            g_signal_connect_after(widget, "switch-page", G_CALLBACK(OnSelectedIndexChanged), this);
         }
         
         TabControlItem<T>* AddItem(bool addScrollView = true, bool preventClosing = false)
@@ -170,10 +174,32 @@ namespace LinuxForms
             return &items[index];
         }
         
+        T* GetSelectedItem()
+        {
+            int selected = GetSelectedIndex();
+                    
+            if(selected >= 0)
+            {
+                auto tabItem = GetItemAtIndex(selected);
+                return tabItem->item.get();            
+            }
+            
+            return nullptr;
+        }
+        
         void OnTabClose(int index)
         {
             RemoveItem(index);
         }
+        
+        static void OnSelectedIndexChanged(GtkNotebook* notebook, GtkWidget* page, guint page_num, gpointer data)
+        {
+            TabControl<T>* tabControl = reinterpret_cast<TabControl<T>*>(data);
+ 
+            if(tabControl->onSelectedIndexChanged != nullptr)
+                tabControl->onSelectedIndexChanged(notebook, page, page_num, data);
+        }
+        
     private:
         std::vector<TabControlItem<T>> items;
     };
