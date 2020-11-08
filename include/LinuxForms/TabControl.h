@@ -126,6 +126,9 @@ namespace LinuxForms
 
             gtk_notebook_remove_page(GTK_NOTEBOOK(widget), index);
             items.erase(items.begin() + index);
+            
+            for(size_t i = 0; i < items.size(); i++)
+                items[i].button->index = i;
         }
 
         void SetTitle(size_t index, const std::string& title)
