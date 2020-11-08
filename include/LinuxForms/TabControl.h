@@ -3,7 +3,6 @@
 
 #include "Widget.h"
 #include <vector>
-#include "Utility/Console.h"
 
 namespace LinuxForms
 {   
@@ -16,10 +15,12 @@ namespace LinuxForms
         std::shared_ptr<Label> label;
         EventHandler<TabButtonClickedEvent> onButtonCloseClicked;
         int index;
-
-        TabButton(int index)
+        bool preventClosing;
+        
+        TabButton(int index, bool preventClosing)
         {
             this->index = index;
+            this->preventClosing = preventClosing;
             image = gtk_image_new_from_stock("gtk-close", GtkIconSize::GTK_ICON_SIZE_MENU);
             closeButton = std::make_shared<Button>();
             closeButton->onClicked += [this] (gpointer data) { this->OnButtonClicked(nullptr); };
@@ -45,6 +46,9 @@ namespace LinuxForms
         
         void OnButtonClicked(gpointer data)
         {
+            if(preventClosing)
+                return;
+
             if(onButtonCloseClicked != nullptr)
                 onButtonCloseClicked(index);
         }
@@ -53,8 +57,7 @@ namespace LinuxForms
     template<typename T>
     class TabControlItem
     {
-    public:        
-        GtkWidget* widget;
+    public:
         std::shared_ptr<T> item;
         std::shared_ptr<TabButton> button;
         std::shared_ptr<Box> box;
@@ -70,7 +73,7 @@ namespace LinuxForms
             widget = gtk_notebook_new();
         }
         
-        TabControlItem<T>* AddItem(bool addScrollView = true)
+        TabControlItem<T>* AddItem(bool addScrollView = true, bool preventClosing = false)
         {
             auto item = std::make_shared<T>();
             Widget* itemWidget = dynamic_cast<Widget*>(item.get());
@@ -81,9 +84,7 @@ namespace LinuxForms
 
                 TabControlItem<T> tabItem;
                 tabItem.item = item;
-                tabItem.widget = itemWidget->widget;
-                tabItem.box = Widget::Create<Box>();
-                tabItem.button = std::make_shared<TabButton>(items.size());
+                tabItem.button = std::make_shared<TabButton>(items.size(), preventClosing);
                 tabItem.button->SetText(labelText);                
                 
                 items.push_back(tabItem);                
@@ -93,17 +94,16 @@ namespace LinuxForms
                 if(addScrollView)
                 {
                     tabItem.scrolledWindow = Widget::Create<ScrolledWindow>();
-                    tabItem.box->Add(tabItem.scrolledWindow.get(), true, true, 0);
-                    tabItem.scrolledWindow->Add(tabItem.widget);
-                    gtk_notebook_append_page(GTK_NOTEBOOK(widget), tabItem.box->widget, tabItem.button->box->widget);
+                    tabItem.scrolledWindow->Add(item->widget);
+                    gtk_notebook_append_page(GTK_NOTEBOOK(widget), tabItem.scrolledWindow->widget, tabItem.button->box->widget);
                     tabItem.item->Show();                
-                    tabItem.box->Show();
                     tabItem.button->Show();
                     tabItem.scrolledWindow->Show();                    
                 }
                 else
                 {
-                    tabItem.box->Add(tabItem.widget, true, true, 0);
+                    tabItem.box = Widget::Create<Box>();
+                    tabItem.box->Add(item->widget, true, true, 0);
                     gtk_notebook_append_page(GTK_NOTEBOOK(widget), tabItem.box->widget, tabItem.button->box->widget);
                     tabItem.item->Show();                
                     tabItem.box->Show();
