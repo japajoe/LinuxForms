@@ -1,4 +1,5 @@
 #include "DemoApplication.h"
+#include "LinuxForms/Utility/StringUtility.h"
 
 void DemoApplication::Initialize()
 {
@@ -82,8 +83,13 @@ void DemoApplication::OnMenuItemOpenClicked()
             std::string text = IO::ReadAllText(filename);            
             auto tabPage = tabControl->AddItem();
             
+            std::string tabname = StringUtility::GetFileNameWithExtension(filename);           
+            
             if(tabPage != nullptr)
+            {
                 tabPage->item->SetText(text);
+                tabPage->button->SetText(tabname);
+            }
         }
     }
 }
