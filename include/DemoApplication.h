@@ -19,7 +19,7 @@ public:
     void OnMenuItemExitClicked();
 
     //Widget Callbacks
-    void OnButtonClicked();
+    void OnButtonClicked(gpointer data);
     void OnDraw(GtkWidget* widget, cairo_t* cr, gpointer data);
     void OnApplicationClosing();
 private:

@@ -5,7 +5,6 @@
 #include "Box.h"
 #include "Button.h"
 #include "ColorPickerDialog.h"
-#include "DialogWindow.h"
 #include "DrawingArea.h"
 #include "Events.h"
 #include "EventHandler.h"

@@ -65,30 +65,27 @@ void DemoApplication::InitializeMenu()
 void DemoApplication::InitializeCallbacks()
 {
     window->onClosing   += [this] () { this->OnApplicationClosing(); };
-    button->onClicked   += [this] () { this->OnButtonClicked(); };
+    button->onClicked   += [this] (gpointer data) { this->OnButtonClicked(data); };
     drawingArea->onDraw += [this] (GtkWidget* widget, cairo_t* cr, gpointer data) { this->OnDraw(widget, cr, data); };
 }
 
 void DemoApplication::OnMenuItemOpenClicked()
-{
-    auto dialog = std::make_shared<DialogWindow>("Message", "Some text here");
-    dialog->Show();
-    
-    // OpenFileDialog dialog;
+{    
+    OpenFileDialog dialog;
 
-    // if(dialog.ShowDialog(window.get()) == DialogResult::OK)
-    // {
-    //     std::string filename = dialog.GetFileName();
+    if(dialog.ShowDialog(window.get()) == DialogResult::OK)
+    {
+        std::string filename = dialog.GetFileName();
         
-    //     if(IO::FileExists(filename))
-    //     {
-    //         std::string text = IO::ReadAllText(filename);            
-    //         auto tabPage = tabControl->AddItem();
+        if(IO::FileExists(filename))
+        {
+            std::string text = IO::ReadAllText(filename);            
+            auto tabPage = tabControl->AddItem();
             
-    //         if(tabPage != nullptr)
-    //             tabPage->item->SetText(text);
-    //     }
-    // }
+            if(tabPage != nullptr)
+                tabPage->item->SetText(text);
+        }
+    }
 }
 
 void DemoApplication::OnMenuItemSaveClicked()
@@ -120,7 +117,7 @@ void DemoApplication::OnMenuItemExitClicked()
     Quit();
 }
 
-void DemoApplication::OnButtonClicked()
+void DemoApplication::OnButtonClicked(gpointer data)
 {
     ColorPickerDialog dialog(window.get());
 

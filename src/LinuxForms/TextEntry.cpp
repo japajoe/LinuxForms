@@ -41,7 +41,7 @@ std::string LinuxForms::TextEntry::GetText()
 void LinuxForms::TextEntry::Clear()
 {
     buffer = "";
-    SetText(buffer);
+    gtk_entry_buffer_delete_text(GTK_ENTRY_BUFFER(textbuffer), 0, -1);
 }
 
 void LinuxForms::TextEntry::SetReadOnly(bool readOnly)

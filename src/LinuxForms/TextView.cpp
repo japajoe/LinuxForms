@@ -47,7 +47,10 @@ std::string LinuxForms::TextView::GetText()
 void LinuxForms::TextView::Clear()
 {
     buffer = "";
-    SetText(buffer);
+    //SetText(buffer);
+    GtkTextIter start, end;
+    gtk_text_buffer_get_bounds(GTK_TEXT_BUFFER(textbuffer), &start, &end);    
+    gtk_text_buffer_delete(GTK_TEXT_BUFFER(textbuffer), &start, &end);
 }
 
 void LinuxForms::TextView::SetReadOnly(bool readOnly)

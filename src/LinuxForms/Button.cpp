@@ -3,10 +3,10 @@
 LinuxForms::Button::Button()
 {
     this->name = name;
-    this->size = { 100, 20 };
-	widget = gtk_button_new_with_label("Button");
+    
+	widget = gtk_button_new();
     g_signal_connect(widget, "clicked", G_CALLBACK(Clicked), this);
-    SetSize(size);
+    
 }
 
 LinuxForms::Button::Button(const std::string& text, int width, int height)
@@ -26,5 +26,5 @@ void LinuxForms::Button::SetText(const std::string& text)
 void LinuxForms::Button::Clicked(GtkWidget* widget, gpointer data)
 {
     Button* button = reinterpret_cast<Button*>(data);
-    button->onClicked();
+    button->onClicked(data);
 }

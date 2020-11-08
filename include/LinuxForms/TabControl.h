@@ -3,16 +3,60 @@
 
 #include "Widget.h"
 #include <vector>
+#include "Utility/Console.h"
 
 namespace LinuxForms
-{    
+{   
+    class TabButton
+    {
+    public:
+        GtkWidget* image;
+        std::shared_ptr<Button> closeButton;        
+        std::shared_ptr<Box> box;
+        std::shared_ptr<Label> label;
+        EventHandler<TabButtonClickedEvent> onButtonCloseClicked;
+        int index;
+
+        TabButton(int index)
+        {
+            this->index = index;
+            image = gtk_image_new_from_stock("gtk-close", GtkIconSize::GTK_ICON_SIZE_MENU);
+            closeButton = std::make_shared<Button>();
+            closeButton->onClicked += [this] (gpointer data) { this->OnButtonClicked(nullptr); };
+            gtk_button_set_image(GTK_BUTTON(closeButton->widget), image);
+            box = std::make_shared<Box>(GtkOrientation::GTK_ORIENTATION_HORIZONTAL, 5);
+            label = std::make_shared<Label>("Text");
+            box->Add(label->widget, false, false, 0);
+            box->Add(closeButton->widget, false, false, 0);
+        }
+        
+        void Show()
+        {
+            gtk_widget_show(closeButton->widget);            
+            gtk_widget_show(box->widget);
+            gtk_widget_show(label->widget);
+            gtk_widget_show(image);
+        }
+        
+        void SetText(const std::string& text)
+        {
+            label->SetText(text);
+        }
+        
+        void OnButtonClicked(gpointer data)
+        {
+            if(onButtonCloseClicked != nullptr)
+                onButtonCloseClicked(index);
+        }
+    };    
+    
     template<typename T>
     class TabControlItem
     {
     public:        
         GtkWidget* widget;
-        std::shared_ptr<T> item;        
-        std::shared_ptr<Label> label;
+        std::shared_ptr<T> item;
+        std::shared_ptr<TabButton> button;
         std::shared_ptr<Box> box;
         std::shared_ptr<ScrolledWindow> scrolledWindow;
     };
@@ -22,7 +66,7 @@ namespace LinuxForms
     {
     public:
         TabControl()
-        {
+        {                
             widget = gtk_notebook_new();
         }
         
@@ -32,36 +76,38 @@ namespace LinuxForms
             Widget* itemWidget = dynamic_cast<Widget*>(item.get());
 
             if(itemWidget != nullptr)
-            {
+            {                
                 std::string labelText = "Page " + std::to_string(items.size() + 1);
 
                 TabControlItem<T> tabItem;
                 tabItem.item = item;
                 tabItem.widget = itemWidget->widget;
                 tabItem.box = Widget::Create<Box>();
-                tabItem.label = Widget::Create<Label>();
-                tabItem.label->SetText(labelText);
-
-                items.push_back(tabItem);
+                tabItem.button = std::make_shared<TabButton>(items.size());
+                tabItem.button->SetText(labelText);                
+                
+                items.push_back(tabItem);                
+                
+                tabItem.button->onButtonCloseClicked += [this] (int index) { this->OnTabClose(index); };
 
                 if(addScrollView)
                 {
                     tabItem.scrolledWindow = Widget::Create<ScrolledWindow>();
                     tabItem.box->Add(tabItem.scrolledWindow.get(), true, true, 0);
                     tabItem.scrolledWindow->Add(tabItem.widget);
-                    gtk_notebook_append_page(GTK_NOTEBOOK(widget), tabItem.box->widget, tabItem.label->widget);
+                    gtk_notebook_append_page(GTK_NOTEBOOK(widget), tabItem.box->widget, tabItem.button->box->widget);
                     tabItem.item->Show();                
                     tabItem.box->Show();
-                    tabItem.label->Show();
+                    tabItem.button->Show();
                     tabItem.scrolledWindow->Show();                    
                 }
                 else
                 {
                     tabItem.box->Add(tabItem.widget, true, true, 0);
-                    gtk_notebook_append_page(GTK_NOTEBOOK(widget), tabItem.box->widget, tabItem.label->widget);
+                    gtk_notebook_append_page(GTK_NOTEBOOK(widget), tabItem.box->widget, tabItem.button->box->widget);
                     tabItem.item->Show();                
                     tabItem.box->Show();
-                    tabItem.label->Show();                    
+                    tabItem.button->Show();
                 }
 
                 int currentPage = items.size() - 1;
@@ -87,7 +133,7 @@ namespace LinuxForms
             if(index >= items.size())
                 return;
             
-            items[index].label->SetText(title);
+            items[index].button->SetText(title);
         }
 
         int GetSelectedIndex() const
@@ -119,6 +165,11 @@ namespace LinuxForms
                 return nullptr;
 
             return &items[index];
+        }
+        
+        void OnTabClose(int index)
+        {
+            RemoveItem(index);
         }
     private:
         std::vector<TabControlItem<T>> items;
