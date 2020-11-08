@@ -27,6 +27,7 @@ namespace LinuxForms
         static std::string ToLowerCase(const std::string& text);
         static std::string ToUpperCase(const std::string& text);
         static int ToInt32(const std::string& text);
+        static long ToInt64(const std::string& text);
 
         template<typename T>
         static bool ParseNumber(const std::string& text, T& value)

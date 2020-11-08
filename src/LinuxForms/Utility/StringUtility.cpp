@@ -231,3 +231,11 @@ int LinuxForms::StringUtility::ToInt32(const std::string& text)
     v = std::strtol(text.c_str(), &end, 10);
     return v;
 }
+
+long LinuxForms::StringUtility::ToInt64(const std::string& text)
+{
+    std::stringstream buffer(text);
+    long value = 0;
+    buffer >> value;
+    return value;
+}
