@@ -25,6 +25,11 @@ void LinuxForms::TextEntry::SetText(const std::string& text)
     gtk_entry_buffer_set_text(GTK_ENTRY_BUFFER(textbuffer), text.c_str(), -1);
 }
 
+void LinuxForms::TextEntry::SetPlaceholderText(const std::string& text)
+{
+    gtk_entry_set_placeholder_text(GTK_ENTRY(widget), text.c_str());
+}
+
 void LinuxForms::TextEntry::AppendText(const std::string& text)
 {
     buffer += text;
@@ -47,6 +52,11 @@ void LinuxForms::TextEntry::Clear()
 void LinuxForms::TextEntry::SetReadOnly(bool readOnly)
 {
     gtk_editable_set_editable(GTK_EDITABLE(widget), !readOnly);
+}
+
+void LinuxForms::TextEntry::SetVisibility(bool visible)
+{
+    gtk_entry_set_visibility(GTK_ENTRY(widget), visible);
 }
 
 void LinuxForms::TextEntry::Submit(GtkWidget* widget, gpointer data)

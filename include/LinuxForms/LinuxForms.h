@@ -23,6 +23,7 @@
 #include "TextEntry.h"
 #include "Texture.h"
 #include "TextView.h"
+#include "Timer.h"
 #include "Window.h"
 
 #include "Input/Input.h"

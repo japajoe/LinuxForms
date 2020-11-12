@@ -17,6 +17,7 @@ namespace LinuxForms
     typedef std::function<void()> SubmitEvent;
     typedef std::function<void(const KeyCode& keycode)> KeyDownEvent;
     typedef std::function<void(const KeyCode& keycode)> KeyUpEvent;
+    typedef std::function<void()> TimerTickEvent;
 }
 
 #endif

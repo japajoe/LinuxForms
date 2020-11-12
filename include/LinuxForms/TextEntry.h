@@ -11,10 +11,12 @@ namespace LinuxForms
         TextEntry();
         TextEntry(const std::string& text);
         void SetText(const std::string& text);
+        void SetPlaceholderText(const std::string& text);
         void AppendText(const std::string& text);
         std::string GetText();
         void Clear();
         void SetReadOnly(bool readOnly);
+        void SetVisibility(bool visible);
         EventHandler<SubmitEvent> onSubmit;
         EventHandler<TextChangedEvent> onTextChanged;
     private:
