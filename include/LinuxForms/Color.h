@@ -11,14 +11,14 @@ namespace LinuxForms
         float r;
         float g;
         float b;
-        float a;
+        float a;        
         
         Color()
         {
             r = 0;
             g = 0;
             b = 0;
-            b = 0;            
+            a = 0;
         }
 
         Color(float r, float g, float b, float a)
@@ -29,10 +29,7 @@ namespace LinuxForms
             this->a = a;
         }
 
-        Color(int r, int g, int b, int a)
-        {
-            SetFromInt(r, g, b, a);
-        }
+
 
         void SetFromInt(int r, int g, int b, int a)
         {
@@ -70,8 +67,17 @@ namespace LinuxForms
         {   
             return ((r & 0xff) << 24) + ((g & 0xff) << 16) + ((b & 0xff) << 8)
                 + (a & 0xff);
-        }        
-    };
+        }
+
+        static Color Red()          { return Color(1.0, 0.0, 0.0, 1.0); }
+        static Color Green()        { return Color(0.0, 1.0, 0.0, 1.0); }
+        static Color Blue()         { return Color(0.0, 0.0, 1.0, 1.0); }
+        static Color Black()        { return Color(0.0, 0.0, 0.0, 1.0); }
+        static Color White()        { return Color(1.0, 1.0, 1.0, 1.0); }
+        
+        static Color LightRed()     { return Color(1.0, 0.27, 0.27, 1.0); }
+        static Color LightGreen()   { return Color(0.0, 0.6, 0.0, 1.0); }
+    };    
 }
 
 #endif

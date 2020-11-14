@@ -2,7 +2,7 @@
 #define INPUT_HPP
 
 #include "KeyCode.h"
-#include "Point.h"
+#include "LinuxForms/Point.h"
 #include "ActionInfo.h"
 #include "AxisInfo.h"
 #include <string>

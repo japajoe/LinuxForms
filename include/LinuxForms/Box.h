@@ -9,7 +9,7 @@ namespace LinuxForms
     {
     public:
         Box();
-        Box(const GtkOrientation& orientation, unsigned int spacing);    
+        Box(const GtkOrientation& orientation, unsigned int spacing = 0, bool homogeneous = false);
         void Add(GtkWidget* target, bool expand, bool fill, unsigned int padding);
         void Add(Widget* target, bool expand, bool fill, unsigned int padding);
     };
