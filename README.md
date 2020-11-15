@@ -8,6 +8,3 @@ I do not intend to make a replacement for gtkmm however, I'm merely trying to ma
 - libgtk-3-dev
 - glib 2.0
 - libgtksourceview-3.0-dev
-
-# How to use the library?
-See DemoApplication.h and DemoApplication.cpp for reference on how to create widgets and register callbacks
