@@ -112,6 +112,34 @@ void LinuxForms::Texture::Render(cairo_t* cr, int x, int y)
     cairo_paint(cr);
 }
 
+GdkPixbuf* LinuxForms::Texture::GetPixelBuffer() const
+{
+    return pixels;
+}
+
+void LinuxForms::Texture::SetPixelBuffer(GdkPixbuf* buffer)
+{
+
+}
+
+LinuxForms::Color LinuxForms::Texture::GetPixel(int x, int y)
+{
+    guchar* pixelbuffer, *p;
+    
+    pixelbuffer = gdk_pixbuf_get_pixels(pixels);
+
+	p = pixelbuffer + y * format.rowStride + x * format.channels;
+
+	guchar c[4];
+    memset(c, 0, 4);
+
+	memcpy(c, p, format.channels);
+
+    Color color;
+    color.SetFromInt(c[0], c[1], c[2], c[3]);
+    return color;
+}
+
 void LinuxForms::Texture::SetPixel(int x, int y, const Color& color)
 {
 	guchar* pixelbuffer, *p;

@@ -34,6 +34,17 @@ void LinuxForms::Widget::SetFocus()
     gtk_widget_grab_focus(widget);
 }
 
+void LinuxForms::Widget::SetAlignmentHorizontal(GtkAlign alignment)
+{
+    gtk_widget_set_halign(widget, alignment);
+}
+
+void LinuxForms::Widget::SetAlignmentVertical(GtkAlign alignment)
+{
+    gtk_widget_set_valign(widget, alignment);
+}
+
+
 void LinuxForms::Widget::Destroy()
 {
     if(GTK_IS_WIDGET(widget))

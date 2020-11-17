@@ -25,6 +25,8 @@ namespace LinuxForms
         Widget& operator = (const Widget& other) = delete;
         virtual void Show();
         void SetSize(const Size& size);
+        void SetAlignmentHorizontal(GtkAlign alignment);
+        void SetAlignmentVertical(GtkAlign alignment);
         void CalculatePreferredSize();
         void SetFocus();
         void Destroy();

@@ -44,6 +44,9 @@ namespace LinuxForms
 		bool LoadFromData(int width, int height, bool hasAlpha = true);
 		void SetPosition(int x, int y);
 		void Render(cairo_t* cr, int x, int y);
+        GdkPixbuf* GetPixelBuffer() const;
+        void SetPixelBuffer(GdkPixbuf* buffer);
+        Color GetPixel(int x, int y);
 		void SetPixel(int x, int y, const Color& color);
 		void Clear(const Color& color = { 0.0f, 0.0f, 0.0f, 1.0f });
 		void SetScale(float x, float y);
