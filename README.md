@@ -12,12 +12,10 @@ I do not intend to make a replacement for gtkmm however, I'm merely trying to ma
 # How to use
 
 
-Creating an application
+- Creating an application
 ```cpp
-#include <memory>
 #include "LinuxForms/Application.h"
-#include "Recorder.h"
-#include "WaveFileWriter.h"
+#include <memory>
 
 using namespace LinuxForms;
 
@@ -40,7 +38,6 @@ private:
 void MyApplication::Initialize()
 {
     //Create widgets and set up callbacks
-
     box = std::make_shared<Box>(GtkOrientation::GTK_ORIENTATION_VERTICAL, 0, false);
     button = std::make_shared<Button>("Click");
 
@@ -65,7 +62,7 @@ void MyApplication::OnApplicationQuit()
 }
 ```
 
-Starting an application
+- Starting an application
 ```cpp
 #include "MyApplication.h"
 #include <memory>
