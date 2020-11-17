@@ -24,6 +24,7 @@
 #include "Texture.h"
 #include "TextView.h"
 #include "Timer.h"
+#include "TreeView.h"
 #include "Window.h"
 
 #include "Input/Input.h"
