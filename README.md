@@ -8,3 +8,72 @@ I do not intend to make a replacement for gtkmm however, I'm merely trying to ma
 - libgtk-3-dev
 - glib 2.0
 - libgtksourceview-3.0-dev
+
+# How to use
+
+
+Creating an application
+```cpp
+#include <memory>
+#include "LinuxForms/Application.h"
+#include "Recorder.h"
+#include "WaveFileWriter.h"
+
+using namespace LinuxForms;
+
+class MyApplication : public LinuxForms::Application
+{
+public:
+    void Initialize() override;
+    std::shared_ptr<Box> box;
+    std::shared_ptr<Button> buttonRecord;
+private:
+    void OnButtonClicked(gpointer data);
+    void OnApplicationQuit();
+};
+```
+
+```cpp
+#include "MyApplication.h"
+#include <iostream>
+
+void MyApplication::Initialize()
+{
+    //Create widgets and set up callbacks
+
+    box = std::make_shared<Box>(GtkOrientation::GTK_ORIENTATION_VERTICAL, 0, false);
+    button = std::make_shared<Button>("Click");
+
+    window->Add(box->widget);
+    box->Add(button->widget, false, false, 0);
+
+    window->onClosing += [this] () { this->OnApplicationQuit(); };
+    button->onClicked += [this] (gpointer data) { this->OnButtonRecordClicked(data); };
+
+    window->SetSize({ 512, 512});
+    window->Show();
+}
+
+void AudioRecorderApplication::OnButtonRecordClicked(gpointer data)
+{
+    std::cout << "Button clicked\n";
+}
+
+void MyApplication::OnApplicationQuit()
+{
+    //Clean up stuff before programs exits
+}
+```
+
+Starting an application
+```cpp
+#include "MyApplication.h"
+#include <memory>
+
+int main(int argc, char** argv)
+{
+    auto application = std::make_unique<MyApplication>();
+    application->Run(argc, argv);
+    return 0;
+}
+```
