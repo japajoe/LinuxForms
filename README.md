@@ -48,6 +48,7 @@ void MyApplication::Initialize()
     button->onClicked += [this] (gpointer data) { this->OnButtonRecordClicked(data); };
 
     window->SetSize({ 512, 512});
+    window->SetTitle("Demo Application");
     window->Show();
 }
 
