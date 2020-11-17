@@ -45,14 +45,14 @@ void MyApplication::Initialize()
     box->Add(button->widget, false, false, 0);
 
     window->onClosing += [this] () { this->OnApplicationQuit(); };
-    button->onClicked += [this] (gpointer data) { this->OnButtonRecordClicked(data); };
+    button->onClicked += [this] (gpointer data) { this->OnButtonClicked(data); };
 
     window->SetSize({ 512, 512});
     window->SetTitle("Demo Application");
     window->Show();
 }
 
-void AudioRecorderApplication::OnButtonRecordClicked(gpointer data)
+void MyApplication::OnButtonClicked(gpointer data)
 {
     std::cout << "Button clicked\n";
 }
