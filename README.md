@@ -24,7 +24,7 @@ class MyApplication : public LinuxForms::Application
 public:
     void Initialize() override;
     std::shared_ptr<Box> box;
-    std::shared_ptr<Button> buttonRecord;
+    std::shared_ptr<Button> button;
 private:
     void OnButtonClicked(gpointer data);
     void OnApplicationQuit();
