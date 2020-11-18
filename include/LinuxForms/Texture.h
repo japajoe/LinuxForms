@@ -51,6 +51,8 @@ namespace LinuxForms
 		void Clear(const Color& color = { 0.0f, 0.0f, 0.0f, 1.0f });
 		void SetScale(float x, float y);
 		void DrawLine(int x1, int y1, int x2, int y2, const Color& color);
+		void DrawRectangle(int x, int y, int width, int height, const Color& color);
+        void DrawFilledCircle(int x, int y, int radius, const Color& color);
 		GdkPixbuf* GetPixels() const { return pixels; }
 		ImageFormat format;
 		EventHandler<DrawEvent> onDraw;

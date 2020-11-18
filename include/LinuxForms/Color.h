@@ -18,10 +18,10 @@ namespace LinuxForms
             r = 0;
             g = 0;
             b = 0;
-            a = 0;
+            a = 1;
         }
 
-        Color(float r, float g, float b, float a)
+        Color(float r, float g, float b, float a = 1.0f)
         {
             this->r = r;
             this->g = g;
@@ -29,9 +29,7 @@ namespace LinuxForms
             this->a = a;
         }
 
-
-
-        void SetFromInt(int r, int g, int b, int a)
+        void SetFromInt(int r, int g, int b, int a = 1)
         {
             this->r = (1.0/255) * r;
             this->g = (1.0/255) * g;

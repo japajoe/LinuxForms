@@ -207,18 +207,62 @@ void LinuxForms::Texture::DrawLine(int x1, int y1, int x2, int y2, const Color& 
     }
 }
 
-// void LinuxForms::Texture::DrawLine(int x0, int y0, int x1, int y1, const Color& color)
-// {
-//     int dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
-//     int dy = abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
-//     int err = (dx > dy ? dx : -dy) / 2;
+void LinuxForms::Texture::DrawRectangle(int x, int y, int width, int height, const Color& color)
+{
+	int xStart = x;
+	int xEnd = xStart + width;
+	int yStart = y;
+	int yEnd = yStart + height;
+	
+	for(int i = yStart; i < yEnd; i++)
+	{
+		for(int j = xStart; j < xEnd; j++)
+		{
+			SetPixel(j, i, color);
+		}
+	}
+}
 
-//     while (SetPixel(x0, y0, color), x0 != x1 || y0 != y1) {
-//         int e2 = err;
-//         if (e2 > -dx) { err -= dy; x0 += sx; }
-//         if (e2 <  dy) { err += dx; y0 += sy; }
-//     }
-// }
+void LinuxForms::Texture::DrawFilledCircle(int x, int y, int radius, const Color& color)
+{
+    if (radius < 0 || x < -radius || y < -radius)
+		return;
+
+	if (radius > 0)
+	{
+		int x0 = 0;
+		int y0 = radius;
+		int d = 3 - 2 * radius;
+
+		auto drawline = [&](int sx, int ex, int y)
+		{
+			for (int x = sx; x <= ex; x++)
+				SetPixel(x, y, color);
+		};
+
+		while (y0 >= x0)
+		{
+			drawline(x - y0, x + y0, y - x0);
+			if (x0 > 0)	drawline(x - y0, x + y0, y + x0);
+
+			if (d < 0)
+				d += 4 * x0++ + 6;
+			else
+			{
+				if (x0 != y0)
+				{
+					drawline(x - x0, x + x0, y - y0);
+					drawline(x - x0, x + x0, y + y0);
+				}
+				d += 4 * (x0++ - y0--) + 10;
+			}
+		}
+	}
+	else
+		SetPixel(x, y, color);
+}
+
+
 
 gboolean LinuxForms::Texture::Draw(GtkWidget* widget, cairo_t* cr, gpointer data)
 {
