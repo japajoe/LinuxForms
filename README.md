@@ -47,7 +47,7 @@ void MyApplication::Initialize()
     window->onClosing += [this] () { this->OnApplicationQuit(); };
     button->onClicked += [this] (gpointer data) { this->OnButtonClicked(data); };
 
-    window->SetSize({ 512, 512});
+    window->SetSize({ 512, 512 });
     window->SetTitle("Demo Application");
     window->Show();
 }
