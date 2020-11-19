@@ -9,6 +9,7 @@ namespace LinuxForms
 {
     typedef std::function<void()> WindowClosingEvent;
     typedef std::function<void(gpointer data)> ButtonClickedEvent;
+    typedef std::function<void(guint button, double x, double y)> ButtonPressedEvent;
     typedef std::function<void(int index)> TabButtonClickedEvent;
     typedef std::function<void()> TextChangedEvent;
     typedef std::function<void()> MenuItemClickedEvent;
