@@ -174,6 +174,37 @@ void LinuxForms::Texture::SetPixel(int x, int y, const Color& color)
 	memcpy(p, c, format.channels);
 }
 
+void LinuxForms::Texture::SetPixels(unsigned char* buffer, size_t size)
+{
+	guchar* pixelbuffer, *p;
+
+	if(format.colorSpace != GDK_COLORSPACE_RGB)
+	{
+		printf("ColorSpace != RGB\n");
+		return;
+	}
+
+	if(format.bitsPerSample != 8)
+	{
+		printf("Bits Per Sample != 8\n");
+		return;
+	}
+
+	//guchar c[4];
+    //p = pixelbuffer;
+    pixelbuffer = gdk_pixbuf_get_pixels(pixels);
+
+    memcpy(pixelbuffer, buffer, size);
+
+    //for(size_t i = 0; i < size; i+= format.channels)
+    //{
+    //    p = pixelbuffer + (format.channels * i);
+    //    memset(c, 0, 4);
+    //    memcpy(c, &buffer[i], format.channels);
+    //    memcpy(p, c, format.channels);        
+    //}
+}
+
 void LinuxForms::Texture::Clear(const Color& color)
 {
 	if(pixels == nullptr)
