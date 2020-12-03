@@ -3,17 +3,17 @@
 
 LinuxForms::Application::Application()
 {
-    
+    isClosing = false;
 }
 
 void LinuxForms::Application::Run(int argc, char** argv)
 {
     gtk_init(&argc, &argv);
     
-    window = Widget::Create<Window>();      
+    window = Widget::Create<Window>();
     
     Initialize();
-
+    window->onClosing += [this] () { this->OnApplicationPreQuit(); };
     window->onClosing += [this] () { this->OnApplicationQuit(); };
 
     TimeUtility::Initialize();
@@ -32,6 +32,11 @@ void LinuxForms::Application::Initialize()
 void LinuxForms::Application::Quit()
 {
     gtk_widget_destroy(window->widget);
+}
+
+void LinuxForms::Application::OnApplicationPreQuit()
+{
+    isClosing = true;
 }
 
 void LinuxForms::Application::OnApplicationQuit()

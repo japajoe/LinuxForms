@@ -37,6 +37,18 @@ namespace LinuxForms
             this->a = (1.0/255) * a;
         }
 
+        void SetFromHex(int hex)
+        {
+            union
+            {
+                unsigned char b[4];
+                int i;
+            } u;
+
+            u.i = hex;
+            SetFromInt(u.b[0], u.b[1], u.b[2], u.b[3]); 
+        }
+
         Color GetGrayscale()
         {
             float v = (float)((r + g + b) / 3);            

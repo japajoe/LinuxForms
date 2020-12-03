@@ -14,8 +14,11 @@ namespace LinuxForms
         void Run(int argc, char** argv);
         void Quit();
         std::shared_ptr<Window> window;
+        bool IsClosing() const { return isClosing; }
     private:
         void OnApplicationQuit();
+        void OnApplicationPreQuit();
+        bool isClosing;
     };
 }
 

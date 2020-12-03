@@ -27,6 +27,7 @@ namespace LinuxForms
         void SetSize(const Size& size);
         void SetAlignmentHorizontal(GtkAlign alignment);
         void SetAlignmentVertical(GtkAlign alignment);
+        void SetMargins(double top, double left, double bottom, double right);
         void CalculatePreferredSize();
         void SetFocus();
         void Destroy();

@@ -44,6 +44,17 @@ void LinuxForms::Widget::SetAlignmentVertical(GtkAlign alignment)
     gtk_widget_set_valign(widget, alignment);
 }
 
+void LinuxForms::Widget::SetMargins(double top, double left, double bottom, double right)
+{
+    if(top > 0)
+    	gtk_widget_set_margin_top(widget, top);
+    if(left > 0)	
+        gtk_widget_set_margin_start(widget, left);
+    if(bottom > 0)	
+        gtk_widget_set_margin_bottom(widget, bottom);
+    if(right > 0)	
+        gtk_widget_set_margin_end(widget, right);
+}
 
 void LinuxForms::Widget::Destroy()
 {
