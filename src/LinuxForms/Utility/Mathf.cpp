@@ -1,5 +1,6 @@
 #include "Mathf.h"
 #include <math.h>
+#include <stdexcept>      // std::invalid_argument
 
 constexpr double LinuxForms::Mathf::_PI;
 constexpr float LinuxForms::Mathf::Deg2Rad;
@@ -75,4 +76,43 @@ float LinuxForms::Mathf::Clamp(float& value, const float& min, const float& max)
     if(value < min)
         value = min;
     return value;           
+}
+
+bool LinuxForms::Mathf::TryParseDouble(const std::string& t, double& v)
+{
+	try
+	{
+		v = std::stod(t);
+		return true;
+	}
+	catch(const std::invalid_argument& ex)
+	{
+		return false;
+	}
+}
+
+bool LinuxForms::Mathf::TryParseFloat(const std::string& t, float& v)
+{
+	try
+	{
+		v = std::stof(t);
+		return true;
+	}
+	catch(const std::invalid_argument& ex)
+	{
+		return false;
+	}
+}
+
+bool LinuxForms::Mathf::TryParseInt(const std::string& t, int& v)
+{
+	try
+	{
+		v = std::stoi(t);
+		return true;
+	}
+	catch(const std::invalid_argument& ex)
+	{
+		return false;
+	}	
 }

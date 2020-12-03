@@ -1,6 +1,8 @@
 #ifndef MATHF_HPP
 #define MATHF_HPP
 
+#include <string>
+
 namespace LinuxForms
 {
     class Mathf
@@ -24,6 +26,9 @@ namespace LinuxForms
         static float Acos(const float& x);
         static float Sqrt(const float& x);
         static float Clamp(float& value, const float& min, const float& max);
+        static bool TryParseDouble(const std::string& t, double& v);
+        static bool TryParseFloat(const std::string& t, float& v);
+        static bool TryParseInt(const std::string& t, int& v);
     };
 }
 #endif
