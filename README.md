@@ -10,6 +10,7 @@ I do not intend to make a replacement for gtkmm however, I'm merely trying to ma
 - libgtksourceview-3.0-dev
 
 # Example application made with LinuxForms
+https://github.com/japajoe/SharpAudio
 ![](Example/SharpAudioPreview.png)
 
 # How to use
