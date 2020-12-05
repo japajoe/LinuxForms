@@ -25,6 +25,7 @@ namespace LinuxForms
         void Clear();
         void ToggleLineNumbers(bool enabled);
         std::string GetLanguageString(const SourceLanguage& sourceLanguage);
+        GtkSourceBuffer* GetBuffer() const;
         EventHandler<TextChangedEvent> onTextChanged;
     private:
         GtkSourceBuffer *sourcebuffer;

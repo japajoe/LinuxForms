@@ -85,6 +85,10 @@ std::string LinuxForms::SourceView::GetLanguageString(const SourceLanguage& sour
 	}
 }
 
+GtkSourceBuffer* LinuxForms::SourceView::GetBuffer() const 
+{
+	return sourcebuffer; 
+}
 
 void LinuxForms::SourceView::TextChanged(GtkSourceBuffer *textbuffer, gpointer data)
 {
