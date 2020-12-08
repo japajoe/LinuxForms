@@ -53,7 +53,6 @@ void MyApplication::Initialize()
 
     window->SetSize({ 512, 512 });
     window->SetTitle("Demo Application");
-    window->Show();
 }
 
 void MyApplication::OnButtonClicked(gpointer data)
