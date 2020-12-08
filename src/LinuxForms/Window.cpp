@@ -91,6 +91,7 @@ void LinuxForms::Window::WindowClosing(GtkWidget *widget, gpointer data)
 gboolean LinuxForms::Window::KeyDown(GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
     int vkCode = event->keyval;
+
 	KeyCode key = (KeyCode)vkCode;	
     Input::SetStateUp(key, 0);
     Input::SetStateDown(key, 1);
