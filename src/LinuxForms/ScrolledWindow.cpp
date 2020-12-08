@@ -66,7 +66,7 @@ void LinuxForms::ScrolledWindow::Add(Widget* child)
 
 LinuxForms::Vector2 LinuxForms::ScrolledWindow::GetScrollPosition()
 {
-	double x = gtk_adjustment_get_value(hAdjustment);
-	double y = gtk_adjustment_get_value(vAdjustment);
+	float x = gtk_adjustment_get_value(hAdjustment);
+	float y = gtk_adjustment_get_value(vAdjustment);
 	return {x, y};
 }
