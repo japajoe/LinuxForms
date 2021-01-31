@@ -9,6 +9,7 @@
 #include "DrawingArea.h"
 #include "Events.h"
 #include "EventHandler.h"
+#include "GLArea.h"
 #include "Image.h"
 #include "Label.h"
 #include "ListBox.h"
