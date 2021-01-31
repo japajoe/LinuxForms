@@ -20,6 +20,11 @@ namespace LinuxForms
     typedef std::function<void(const KeyCode& keycode)> KeyUpEvent;
     typedef std::function<void()> TimerTickEvent;
     typedef std::function<void(gpointer data)> ValueChangedEvent;
+    typedef std::function<void(GtkGLArea* area, GdkGLContext* context, gpointer data)> GLAreaRenderEvent;
+    typedef std::function<void(GtkGLArea* area, gpointer data)> GLAreaRealizeEvent;
+    typedef std::function<void(GtkGLArea* area, gpointer data)> GLAreaUnRealizeEvent;
+    typedef std::function<void(GtkWidget* widget, GdkEventMotion* event, gpointer data)> MouseMoveEvent;
+    typedef std::function<void(GtkGLArea* area, int width, int height, gpointer data)> GLAreaResizeEvent;
 }
 
 #endif
