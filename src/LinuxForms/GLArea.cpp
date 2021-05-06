@@ -29,6 +29,12 @@ namespace LinuxForms
         gtk_gl_area_queue_render(GTK_GL_AREA(widget));
     }
 
+    void GLArea::SetSize(int width, int height)
+    {
+        this->width = width;
+        this->height = height;
+    }
+
     gboolean GLArea::OnGLAreaRender(GtkGLArea* area, GdkGLContext* context, gpointer data)
     {
         GLArea* glArea = reinterpret_cast<GLArea*>(data);
@@ -62,6 +68,7 @@ namespace LinuxForms
     void GLArea::OnResize(GtkGLArea* area, int width, int height, gpointer data)
     {
         GLArea* glArea = reinterpret_cast<GLArea*>(data);
+        glArea->SetSize(width, height);
          if(glArea->onResize != nullptr)
              glArea->onResize(area, width, height, data);
     }

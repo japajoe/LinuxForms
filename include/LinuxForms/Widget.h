@@ -24,6 +24,8 @@ namespace LinuxForms
         Widget();
         Widget& operator = (const Widget& other) = delete;
         virtual void Show();
+        int GetId() const;
+        void SetId(int id);
         void SetSize(const Size& size);
         void SetAlignmentHorizontal(GtkAlign alignment);
         void SetAlignmentVertical(GtkAlign alignment);
@@ -42,6 +44,8 @@ namespace LinuxForms
                 return ptr;
             return nullptr;
         }
+    private:
+        int id;
     };
 }
 

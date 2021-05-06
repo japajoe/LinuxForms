@@ -15,7 +15,12 @@ namespace LinuxForms
         EventHandler<MouseMoveEvent> onMouseMove;
         EventHandler<GLAreaResizeEvent> onResize;
         void SwapBuffers();
+        int GetWidth() const { return width; }
+        int GetHeight() const { return height; }
+        void SetSize(int width, int height);
     private:
+        int width;
+        int height;
         static gboolean OnGLAreaRender(GtkGLArea* area, GdkGLContext* context, gpointer data);
         static void OnGLAreaRealize(GtkGLArea* area, gpointer data);
         static void OnGLAreaUnRealize(GtkGLArea* area, gpointer data);

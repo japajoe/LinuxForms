@@ -10,6 +10,16 @@ void LinuxForms::Widget::Show()
     gtk_widget_show(widget);
 }
 
+int LinuxForms::Widget::GetId() const 
+{ 
+    return this->id; 
+}
+
+void LinuxForms::Widget::SetId(int id) 
+{ 
+    this->id = id; 
+}
+
 void LinuxForms::Widget::SetSize(const Size& size)
 {
     this->size = size;
